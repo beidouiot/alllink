@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: oauth2-auth-server-center
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        
+server:
+  port: 9099
+
+
