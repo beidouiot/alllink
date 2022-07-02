@@ -56,8 +56,6 @@
   <modules>
   	<module>common</module>
   	<module>dao</module>
-  	<module>api-gateway</module>
-  	<module>feign</module>
   	<module>api-gateway-web</module>
   	<module>oauth2-auth-server-center</module>
   	<module>user-center</module>
