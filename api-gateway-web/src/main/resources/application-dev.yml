@@ -1,0 +1,111 @@
+    
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    
+  cloud:
+    gateway:
+      routes:
+        - id: user-center-router
+          uri: lb://user-center-server
+          predicates:
+            - Path=${app.api.prefix}uc/**
+          filters:
+            - StripPrefix=1
+        - id: oauth2-auth-server-center-router
+          uri: lb://oauth2-auth-server-center
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+#        - id: oauth2-resource-server-router
+#          uri: lb://oauth2-resource-server
+#          predicates:
+#            - Path=/api/**
+#          filters:
+#            - StripPrefix=1
+        - id: product-center-server-router
+          uri: lb://product-center-server
+          predicates:
+            - Path=${app.api.prefix}pc/**
+          filters:
+            - StripPrefix=1
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+          lower-case-service-id: true #使用小写服务名，默认是大写
+#      globalcors:
+#              cors-configurations:
+#                '[/**]':
+#                  allowedOrigins: "http://localhost, http://localhost:9999"
+#                  allowedMethods:
+#                  - GET
+#                  - POST
+#                  - DELETE
+#                  - PUT
+#                  - OPTIONS
+#      default-filters:
+#         - AddResponseHeader=Access-Control-Allow-Credentials,true
+#         - AddResponseHeader=Access-Control-Allow-Headers,access-control-allow-origin
+#         - AddResponseHeader=Access-Control-Allow-Methods,GET,OPTIONS,POST,DELETE
+#         - AddResponseHeader=Access-Control-Allow-Origin,*
+#         - AddResponseHeader=Access-Control-Allow-Age,3600  
+
+
+  redis: #redis配置
+    host: localhost
+    port: 6379
+    password:
+    database: 2
+    lettuce:
+      pool:
+        max-active: 300
+        max-wait: 3000ms
+        max-idle: 100
+        min-idle: 100
+    timeout: 6000ms
+
+#  datasource: #数据库配置
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/iot_user_center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+#      type: com.zaxxer.hikari.HikariDataSource
+#      hikari:
+#        username: root
+#        password: 123456
+#        minimum-idle: 10
+#        maximum-pool-size: 50
+#        auto-commit: true
+#        idle-timeout: 30000
+#        pool-name: DatebookHikariCP
+#        max-lifetime: 1800000
+#        connection-timeout: 30000
+#        connection-test-query: SELECT 1
+  
+#  jpa:
+#    show-sql: true
+#    hibernate: #(create, create-drop, update)
+#      ddl-auto: update
+#      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#        format_sql: true
+#  data:
+#    jpa:
+#      repositories:
+#        bootstrap-mode: deferred
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:9099/rsa/publicKey' #配置RSA的公钥访问地址
+          
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/actuator/**"
+      - "/auth/oauth/token"
+
+app:
+  api:
+    prefix: "/api/"

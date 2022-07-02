@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: api-gateway-web
+    
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+#    sentinel:
+#      transport:
+#        dashboard: localhost:8080 #sentinel控制台服务端地址
+#  autoconfigure:
+#    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+        
+server:
+  port: 9999
+
+
