@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.beidouiot.alllink.community</groupId>
+    <artifactId>alllink-community</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.beidouiot.alllink.community.common</groupId>
+  <artifactId>common</artifactId>
+  <packaging>pom</packaging>
+  <name>common</name>
+  <description>通用模块</description>
+  <modules>
+  	<module>common-data</module>
+  	<module>common-dao-api</module>
+  	<module>common-utils</module>
+  	<module>common-base</module>
+  	<module>common-controller</module>
+  </modules>
+</project>

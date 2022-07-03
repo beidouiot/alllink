@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.beidouiot.alllink.community</groupId>
+    <artifactId>alllink-community</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>oauth2-auth-server-center</artifactId>
+  <name>oauth2-auth-server-center</name>
+  <description>oauth2认证服务中心</description>
+  
+    <dependencies>
+<!-- 		<dependency>
+		  <groupId>com.beidouiot.alllink.community.common.data.entity</groupId>
+		  <artifactId>base-entity</artifactId>
+		</dependency> -->
+<!-- 		<dependency>
+		  <groupId>com.beidouiot.alllink.community.common.data.xxo</groupId>
+		  <artifactId>base-xxo</artifactId>
+		</dependency> -->
+		<dependency>
+		  <groupId>com.beidouiot.alllink.community.dao</groupId>
+		  <artifactId>user-center-dao</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+        </dependency>
+		<dependency>
+		    <groupId>cn.hutool</groupId>
+		    <artifactId>hutool-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>
+	    <dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.alibaba.nacos</groupId>
+	        <artifactId>nacos-client</artifactId>
+	    </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+    </dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

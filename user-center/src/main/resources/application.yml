@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: user-center-server
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        
+server:
+  port: 9000
+
+

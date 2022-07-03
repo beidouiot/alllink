@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.beidouiot.alllink.community.common.data</groupId>
+    <artifactId>common-data</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.beidouiot.alllink.community.common.data.xxo</groupId>
+  <artifactId>data-xxo</artifactId>
+  <packaging>pom</packaging>
+  <name>data-xxo</name>
+  <description>数据传输对象</description>
+  <modules>
+  	<module>user-center-xxo</module>
+  	<module>base-xxo</module>
+  	<module>product-xxo</module>
+  </modules>
+</project>

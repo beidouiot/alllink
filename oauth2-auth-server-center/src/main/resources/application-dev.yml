@@ -1,0 +1,79 @@
+    
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+#    sentinel:
+#      transport:
+#        dashboard: localhost:8080 #sentinel控制台服务端地址
+        
+#  autoconfigure:
+#    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+    
+  redis: #redis配置
+    host: localhost
+    port: 6379
+    password:
+    database: 2
+    lettuce:
+      pool:
+        max-active: 10
+        max-wait: 3000ms
+        max-idle: 10
+        min-idle: 0
+    timeout: 6000ms
+
+  datasource: #数据库配置
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/iot_user_center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        username: root
+        password: 123456
+        minimum-idle: 10
+        maximum-pool-size: 50
+        auto-commit: true
+        idle-timeout: 3000
+        pool-name: DatebookHikariCP
+        max-lifetime: 18000
+        connection-timeout: 3000
+        connection-test-query: SELECT 1
+  
+  jpa:
+    show-sql: true
+    hibernate: #(create, create-drop, update)
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+
+  cache:
+    multi:
+      caffeine:
+        expireAfterAccess: 10000
+      redis:
+        defaultExpiration: 60000
+    cache-names: userNameCache
+
+access_token:
+  jwt-signing-key: 123456
+#请求处理的超时时间
+#ribbon:
+#  ReadTimeout: 6000
+#  ConnectTimeout: 3000
+
+#logging:
+#  level: 
+#    com.beidouiot.alllink.community.user.center.feign.OAuth2FeignClient: debug
