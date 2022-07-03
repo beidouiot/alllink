@@ -24,10 +24,6 @@
 	  <groupId>com.beidouiot.alllink.community.dao</groupId>
 	  <artifactId>product-server-dao</artifactId>
 	</dependency>
-	<dependency>
-	  <groupId>com.beidouiot.alllink.community.feign</groupId>
-	  <artifactId>oauth2-feign</artifactId>
-	</dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
