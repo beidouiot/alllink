@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @EnableCaching
-@EnableFeignClients(basePackages = {"com.beidouiot.alllink.community.feign"})
+//@EnableFeignClients(basePackages = {"com.beidouiot.alllink.community.feign"})
 @EnableOpenApi
 @SpringBootApplication(scanBasePackages = {"com.beidouiot.alllink.community"})
 @EnableJpaAuditing
