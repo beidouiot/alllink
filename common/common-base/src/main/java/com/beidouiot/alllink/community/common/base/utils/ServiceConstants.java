@@ -29,6 +29,7 @@ public class ServiceConstants {
 	public static final String INDUSTRY_TYPE_URI_BASE = PRODUCT_CENTER_URI_BASE + "industryType/";
 	public static final String PRODUCT_URI_BASE = PRODUCT_CENTER_URI_BASE + "product/";
 	public static final String PRODUCT_TYPE_URI_BASE = PRODUCT_CENTER_URI_BASE + "productType/";
+	public static final String STANDARD_MODEL_URI_BASE = PRODUCT_CENTER_URI_BASE + "standard/model/";
 	public static final String STANDARD_PROPERTY_MODEL_URI_BASE = PRODUCT_CENTER_URI_BASE + "standard/pm/";
 	public static final String STANDARD_PROPERTY_MODEL_PARAM_URI_BASE = PRODUCT_CENTER_URI_BASE + "standard/pmp/";
 	public static final String STANDARD_EVENT_MODEL_URI_BASE = PRODUCT_CENTER_URI_BASE + "standard/em/";
