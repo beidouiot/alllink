@@ -133,5 +133,12 @@ public class UserDto extends BaseDto {
 		strparkId = parkId == null ? "" : String.valueOf(parkId);
 		return strparkId;
 	}
+	
+	private String strStatus;
+	
+	public String getStrStatus() {
+		strStatus = status ? "禁用" : "启用";
+		return strStatus;
+	}
 
 }

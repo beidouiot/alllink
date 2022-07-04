@@ -47,6 +47,8 @@ public class TenantDto extends BaseDto {
 	
 	private Boolean status;
 	
+	private String strStatus;
+	
 	private String systemCode;
 	
 	private String strId;
@@ -61,6 +63,11 @@ public class TenantDto extends BaseDto {
 	public String getStrIndustryId() {
 		strIndustryId = strIndustryId == null ? "" : String.valueOf(strIndustryId);
 		return strIndustryId;
+	}
+	
+	public String getStrStatus() {
+		strStatus = status ? "禁用" : "启用";
+		return strStatus;
 	}
 	
 }
