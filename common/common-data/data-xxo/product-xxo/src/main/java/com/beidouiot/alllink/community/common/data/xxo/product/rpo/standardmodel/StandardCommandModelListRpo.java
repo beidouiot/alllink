@@ -15,9 +15,9 @@ import lombok.Data;
 * @author Administrator
 * @date 2022年6月26日
 */
-@Api(tags="增加标准属性物模型请求信息集")
+@Api(tags="增加标准指令物模型请求信息集")
 @Data
-public class StandardPropertyModelListRpo implements Serializable {
+public class StandardCommandModelListRpo implements Serializable {
 
 	/**
 	 * 
@@ -28,8 +28,8 @@ public class StandardPropertyModelListRpo implements Serializable {
 	@NotNull(message = "产品类型ID不能为空！")
 	private Long productTypeId;
 	
-	@ApiModelProperty(value = "标准属性物模型集", dataType = "Array", required = true)
-	@NotNull(message = "标准属性物模型不能为空！")
-	private List<StandardPropertyModelAddRpo> standardPropertyModelList;
+	@ApiModelProperty(value = "标准指令物模型集", dataType = "Array", required = true)
+	@NotNull(message = "标准指令物模型不能为空！")
+	private List<StandardCommandModelAddRpo> standardCommandModelList;
 
 }

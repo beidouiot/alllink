@@ -22,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.beidouiot.alllink.community.common.base.enums.ErrorCodeConstants;
 import com.beidouiot.alllink.community.common.base.exception.CanNotDeleteDataException;
@@ -89,7 +91,8 @@ public class UserServiceImpl implements UserService {
 		passwordEncoder = new BCryptPasswordEncoder();
 		return passwordEncoder;
 	}
-
+	
+	@Override
 	public void saveEntity(UserDto userDto) throws ServiceException {
 		LOGGER.debug("userDto = [ {} ]", userDto);
 		User existUser = userRepository.findUserByUsernameOrEmailOrMobileAndDeleteFlag(userDto.getUsername(), userDto.getEmail(), userDto.getMobile(), Constants.FALSE);
@@ -102,6 +105,7 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 	}
 
+	@Override
 	public void delete(Long id) throws ServiceException {
 		Optional<User> oUser = userRepository.findById(id);
 		if (oUser == null) {

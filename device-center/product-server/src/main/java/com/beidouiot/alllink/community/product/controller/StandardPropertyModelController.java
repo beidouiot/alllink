@@ -28,6 +28,7 @@ import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardPropertyModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardPropertyModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelAddRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelListRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -41,7 +42,7 @@ import io.swagger.annotations.ApiParam;
 /**
 *
 * @Description TODO
-* @author longww
+* @author longww 
 * @date 2022年2月15日
 */
 @Api(tags = "标准属性模型管理")
@@ -63,13 +64,16 @@ public class StandardPropertyModelController extends BaseController {
 	@ApiOperation(value = "标准属性模型信息添加", notes = "标准属性模型信息添加")
 	@PostMapping("v1/add")
 	public ResponseEntity<ResultDataRro<Object>> add(
-			@RequestBody @ApiParam(name = "新增标准属性模型信息", value = "标准属性模型信息请求参数", required = true) @Valid StandardPropertyModelAddRpo standardPropertyModelAddRpo) {
+			@RequestBody @ApiParam(name = "新增标准属性模型信息", value = "标准属性模型信息请求参数", required = true) @Valid StandardPropertyModelListRpo standardPropertyModelListRpo) {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("standardPropertyModelAddRpo= [ {} ]", standardPropertyModelAddRpo);
+			LOGGER.debug("standardPropertyModelAddRpo= [ {} ]", standardPropertyModelListRpo);
 		}
-		StandardPropertyModelDto standardPropertyModelDto = standardPropertyModelRpoDtoMapping.targetToSource(standardPropertyModelAddRpo);
-		addUsernameAndDate(standardPropertyModelDto, true);
-		standardPropertyModelService.saveEntity(standardPropertyModelDto);
+		List<StandardPropertyModelAddRpo> list = standardPropertyModelListRpo.getStandardPropertyModelList();
+		for (StandardPropertyModelAddRpo standardPropertyModelAddRpo : list) {
+			StandardPropertyModelDto standardPropertyModelDto = standardPropertyModelRpoDtoMapping.targetToSource(standardPropertyModelAddRpo);
+			addUsernameAndDate(standardPropertyModelDto, true);
+			standardPropertyModelService.saveEntity(standardPropertyModelDto);
+		}
 
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
