@@ -18,4 +18,6 @@ public interface StandardPropertyModelRepository extends PagingAndSortingReposit
 		JpaSpecificationExecutor<StandardPropertyModel> {
 	
 	List<StandardPropertyModel> findByDeleteFlag(Boolean deleteFlag);
+	
+	List<StandardPropertyModel> findByProductTypeIdAndDeleteFlag(Long productTypeId,Boolean deleteFlag);
 }

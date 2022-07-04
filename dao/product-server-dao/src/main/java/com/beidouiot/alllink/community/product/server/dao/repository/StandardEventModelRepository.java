@@ -19,4 +19,6 @@ public interface StandardEventModelRepository
 
 	List<StandardEventModel> findByDeleteFlag(Boolean deleteFlag);
 	
+	List<StandardEventModel> findByProductTypeIdAndDeleteFlag(Long productTypeId,Boolean deleteFlag);
+	
 }

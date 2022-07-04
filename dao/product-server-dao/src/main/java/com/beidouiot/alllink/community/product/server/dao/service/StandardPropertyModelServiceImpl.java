@@ -108,12 +108,8 @@ public class StandardPropertyModelServiceImpl implements StandardPropertyModelSe
 	@Override
 	public List<StandardPropertyModelDto> findAll() throws ServiceException {
 		List<StandardPropertyModel> list = standardPropertyModelRepository.findByDeleteFlag(Constants.FALSE);
-		List<StandardPropertyModelDto> dtoList = new ArrayList<StandardPropertyModelDto>();
-		for (StandardPropertyModel standardPropertyModel : list) {
-			StandardPropertyModelDto standardPropertyModelDto = standardPropertyModelDtoMapping.sourceToTarget(standardPropertyModel);
-			dtoList.add(standardPropertyModelDto);
-		}
-		return dtoList;
+		List<StandardPropertyModelDto> listDto = standardPropertyModelDtoMapping.sourceToTarget(list);
+		return listDto;
 	}
 
 	@Override
