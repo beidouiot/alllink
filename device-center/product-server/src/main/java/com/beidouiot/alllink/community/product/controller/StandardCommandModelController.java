@@ -28,6 +28,7 @@ import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardCommandModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardCommandModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelAddRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelListRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -63,13 +64,16 @@ public class StandardCommandModelController extends BaseController {
 	@ApiOperation(value = "标准指令模型信息添加", notes = "标准指令模型信息添加")
 	@PostMapping("v1/add")
 	public ResponseEntity<ResultDataRro<Object>> add(
-			@RequestBody @ApiParam(name = "新增标准指令模型信息", value = "标准指令模型信息请求参数", required = true) @Valid StandardCommandModelAddRpo standardCommandModelAddRpo) {
+			@RequestBody @ApiParam(name = "新增标准指令模型信息", value = "标准指令模型信息请求参数", required = true) @Valid StandardCommandModelListRpo standardCommandModelListRpo) {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("standardCommandModelAddRpo= [ {} ]", standardCommandModelAddRpo);
+			LOGGER.debug("standardCommandModelAddRpo= [ {} ]", standardCommandModelListRpo);
 		}
-		StandardCommandModelDto standardCommandModelDto = standardCommandModelRpoDtoMapping.targetToSource(standardCommandModelAddRpo);
-		addUsernameAndDate(standardCommandModelDto, true);
-		standardCommandModelService.saveEntity(standardCommandModelDto);
+		List<StandardCommandModelAddRpo> list = standardCommandModelListRpo.getStandardCommandModelList();
+		for (StandardCommandModelAddRpo standardCommandModelAddRpo : list) {
+			StandardCommandModelDto standardCommandModelDto = standardCommandModelRpoDtoMapping.targetToSource(standardCommandModelAddRpo);
+			addUsernameAndDate(standardCommandModelDto, true);
+			standardCommandModelService.saveEntity(standardCommandModelDto);
+		}
 
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}

@@ -28,6 +28,7 @@ import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardEventModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardEventModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelAddRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelListRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -63,13 +64,16 @@ public class StandardEventModelController extends BaseController {
 	@ApiOperation(value = "标准事件模型信息添加", notes = "标准事件模型信息添加")
 	@PostMapping("v1/add")
 	public ResponseEntity<ResultDataRro<Object>> add(
-			@RequestBody @ApiParam(name = "新增标准事件模型信息", value = "标准事件模型信息请求参数", required = true) @Valid StandardEventModelAddRpo standardEventModelAddRpo) {
+			@RequestBody @ApiParam(name = "新增标准事件模型信息", value = "标准事件模型信息请求参数", required = true) @Valid StandardEventModelListRpo standardEventModelListRpo) {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("standardEventModelAddRpo= [ {} ]", standardEventModelAddRpo);
+			LOGGER.debug("standardEventModelListRpo= [ {} ]", standardEventModelListRpo);
 		}
-		StandardEventModelDto standardEventModelDto = standardEventModelRpoDtoMapping.targetToSource(standardEventModelAddRpo);
-		addUsernameAndDate(standardEventModelDto, true);
-		standardEventModelService.saveEntity(standardEventModelDto);
+		List<StandardEventModelAddRpo> list = standardEventModelListRpo.getStandardEventModelList();
+		for (StandardEventModelAddRpo standardEventModelAddRpo : list) {
+			StandardEventModelDto standardEventModelDto = standardEventModelRpoDtoMapping.targetToSource(standardEventModelAddRpo);
+			addUsernameAndDate(standardEventModelDto, true);
+			standardEventModelService.saveEntity(standardEventModelDto);
+		}
 
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
