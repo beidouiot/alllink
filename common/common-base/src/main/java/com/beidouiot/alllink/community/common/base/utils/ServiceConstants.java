@@ -1,7 +1,7 @@
 package com.beidouiot.alllink.community.common.base.utils;
 
 /**
- * 
+ *   
  *
  * @Description 微服务常量
  * @author longww
