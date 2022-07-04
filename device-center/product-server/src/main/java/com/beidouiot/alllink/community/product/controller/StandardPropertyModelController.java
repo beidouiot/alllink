@@ -42,7 +42,7 @@ import io.swagger.annotations.ApiParam;
 /**
 *
 * @Description TODO
-* @author longww
+* @author longww 
 * @date 2022年2月15日
 */
 @Api(tags = "标准属性模型管理")

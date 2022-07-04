@@ -28,7 +28,6 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(value = ServiceConstants.STANDARD_MODEL_URI_BASE, produces = "application/json; charset=UTF-8")
 public class StandardModelController extends BaseController {
 
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(StandardModelController.class);
 
 	@Autowired
