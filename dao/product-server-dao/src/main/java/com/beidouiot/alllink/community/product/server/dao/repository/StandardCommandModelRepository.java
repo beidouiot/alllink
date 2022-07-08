@@ -20,5 +20,6 @@ public interface StandardCommandModelRepository
 	List<StandardCommandModel> findByDeleteFlag(Boolean deleteFlag);
 	
 	List<StandardCommandModel> findByProductTypeIdAndDeleteFlag(Long productTypeId, Boolean deleteFlag);
+	List<StandardCommandModel> findByProductTypeIdAndDeleteFlagAndStatus(Long productTypeId, Boolean deleteFlag,Boolean status);
 	
 }

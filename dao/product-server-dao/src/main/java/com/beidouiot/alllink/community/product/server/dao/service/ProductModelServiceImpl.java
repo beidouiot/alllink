@@ -22,6 +22,9 @@ import com.beidouiot.alllink.community.common.data.entity.product.ProductModel;
 import com.beidouiot.alllink.community.common.data.entity.product.ProductModelVersion;
 import com.beidouiot.alllink.community.common.data.entity.product.ProductPropertyModel;
 import com.beidouiot.alllink.community.common.data.entity.product.ProductPropertyModelParam;
+import com.beidouiot.alllink.community.common.data.mapping.product.server.productModel.ProductCommandModelDtoMapping;
+import com.beidouiot.alllink.community.common.data.mapping.product.server.productModel.ProductEventModelDtoMapping;
+import com.beidouiot.alllink.community.common.data.mapping.product.server.productModel.ProductPropertyModelDtoMapping;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductCommandModelJsonDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductCommandModelParamJsonDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductEventModelJsonDto;
@@ -71,15 +74,18 @@ public class ProductModelServiceImpl implements ProductModelService {
 	
 	@Autowired
 	private ProductCommandModelParamRepository productCommandModelParamRepository;
+	
+	@Autowired
+	private ProductPropertyModelDtoMapping productPropertyModelDtoMapping;
+	
+	@Autowired
+	private ProductEventModelDtoMapping productEventModelDtoMapping;
+	
+	@Autowired
+	private ProductCommandModelDtoMapping productCommandModelDtoMapping;
 
 	@Override
 	public void saveEntity(ProductModelDto productModelDto) throws ServiceException {
-
-	}
-
-	@Override
-	@Transactional(rollbackFor=Exception.class)
-	public void saveAllEntity(List<ProductModelDto> productModelDtoList) throws ServiceException {
 
 	}
 
@@ -116,78 +122,83 @@ public class ProductModelServiceImpl implements ProductModelService {
 
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public void publishModel(ProductModelDto productModelDto) throws ServiceException {
+	public Boolean publishModel(Long productId) throws ServiceException {
 		try {
 			ProductModelJsonDto productModelJsonDto = new ProductModelJsonDto();
-			productModelJsonDto.setProductId(productModelDto.getProductId());
+			productModelJsonDto.setProductId(productId);
 			List<ProductPropertyModel> productPropertyModelList = productPropertyModelRepository
-					.findByProductIdAndStatusAndDeleteFlag(productModelDto.getProductId(), Constants.FALSE,
+					.findByProductIdAndStatusAndDeleteFlag(productId, Constants.FALSE,
 							Constants.FALSE);
-			modifyList(productPropertyModelList, productModelDto);
+			modifyList(productPropertyModelList);
 			if (productPropertyModelList != null) {
 				productPropertyModelRepository.saveAll(productPropertyModelList);
 				productModelJsonDto.setProperties(productPropertyModelsJsonList(productPropertyModelList));
 			}
 			
-			List<ProductPropertyModelParam> productPropertyModelParamList = productPropertyModelParamRepository.findByProductIdAndStatusAndDeleteFlag(productModelDto.getProductId(), Constants.FALSE,
+			List<ProductPropertyModelParam> productPropertyModelParamList = productPropertyModelParamRepository.findByProductIdAndStatusAndDeleteFlag(productId, Constants.FALSE,
 					Constants.FALSE);
-			modifyList(productPropertyModelParamList, productModelDto);
+			modifyList(productPropertyModelParamList);
 			if (productPropertyModelParamList != null) {
 				productPropertyModelParamRepository.saveAll(productPropertyModelParamList);
 			}
 			
-			List<ProductEventModelParam> productEventModelParamList = productEventModelParamRepository.findByProductIdAndStatusAndDeleteFlag(productModelDto.getProductId(), Constants.FALSE,
+			List<ProductEventModelParam> productEventModelParamList = productEventModelParamRepository.findByProductIdAndStatusAndDeleteFlag(productId, Constants.FALSE,
 					Constants.FALSE);
-			modifyList(productEventModelParamList, productModelDto);
+			modifyList(productEventModelParamList);
 			if (productEventModelParamList != null) {
 				productEventModelParamRepository.saveAll(productEventModelParamList);
 			}
 			
 			List<ProductEventModel> productEventModelList = productEventModelRepository
-					.findByProductIdAndStatusAndDeleteFlag(productModelDto.getProductId(), Constants.FALSE,
+					.findByProductIdAndStatusAndDeleteFlag(productId, Constants.FALSE,
 							Constants.FALSE);
-			modifyList(productEventModelList, productModelDto);
+			modifyList(productEventModelList);
 			if (productEventModelList != null) {
 				productEventModelRepository.saveAll(productEventModelList);
 				productModelJsonDto.setEvents(productEventModelsJsonList(productEventModelList, productEventModelParamsJsonList(productEventModelParamList)));
 			}
 			
-			List<ProductCommandModelParam> productCommandModelParamList = productCommandModelParamRepository.findByProductIdAndStatusAndDeleteFlag(productModelDto.getProductId(), Constants.FALSE,
+			List<ProductCommandModelParam> productCommandModelParamList = productCommandModelParamRepository.findByProductIdAndStatusAndDeleteFlag(productId, Constants.FALSE,
 					Constants.FALSE);
-			modifyList(productCommandModelParamList, productModelDto);
+			modifyList(productCommandModelParamList);
 			if (productCommandModelParamList != null) {
 				productCommandModelParamRepository.saveAll(productCommandModelParamList);
 			}
 			
 			List<ProductCommandModel> productCommandModelList = productCommandModelRepository
-					.findByProductIdAndStatusAndDeleteFlag(productModelDto.getProductId(), Constants.FALSE,
+					.findByProductIdAndStatusAndDeleteFlag(productId, Constants.FALSE,
 							Constants.FALSE);
-			modifyList(productCommandModelList, productModelDto);
+			modifyList(productCommandModelList);
 			if (productCommandModelList != null) {
 				productCommandModelRepository.saveAll(productCommandModelList);
 				productModelJsonDto.setCommands(productCommandModelsJsonList(productCommandModelList, productCommandModelParamsJsonList(productCommandModelParamList)));
 			}
-			
+			Map<String,Object> map = this.getHeaderUser();
 			ProductModel productModel = new ProductModel();
 			productModel.setProductId(productModelJsonDto.getProductId());
 			productModel.setCommands(productModelJsonDto.getCommands());
 			productModel.setEvents(productModelJsonDto.getEvents());
 			productModel.setProperties(productModelJsonDto.getProperties());
 			ProductModelVersion productModelVersion = new ProductModelVersion();
-			productModelVersion.setCreatedBy(productModelDto.getUpdatedBy());
-			productModelVersion.setUpdatedBy(productModelDto.getUpdatedBy());
+			productModelVersion.setCreatedBy(map.get("username").toString());
+			productModelVersion.setUpdatedBy(map.get("username").toString());
 			productModelVersion.setDeleteFlag(Constants.FALSE);
 			productModelVersion.setProductId(productModel.getProductId());
 			productModelVersion.setProductModel(productModel);
 			productModelVersion.setUserFlag(Constants.TRUE);
 			productModelVersion.setVersionNumber(System.currentTimeMillis());
 			
-			ProductModelVersion historyProductModelVersion = productModelVersionRepository.findByProductIdAndUserFlagAndDeleteFlag(productModelJsonDto.getProductId(), Constants.TRUE,Constants.FALSE).get(0);
-			historyProductModelVersion.setUserFlag(Constants.FALSE);
-			historyProductModelVersion.setUpdatedBy(productModelDto.getUpdatedBy());
-			productModelVersionRepository.save(historyProductModelVersion);
-			
-			productModelVersionRepository.save(productModelVersion);
+			List<ProductModelVersion> listPmvs = productModelVersionRepository.findByProductIdAndUserFlagAndDeleteFlag(productModelJsonDto.getProductId(), Constants.TRUE,Constants.FALSE);
+			if(null == listPmvs || listPmvs.size() == 0) {
+				productModelVersionRepository.save(productModelVersion);
+			} else {
+				ProductModelVersion historyProductModelVersion = listPmvs.get(0);
+				historyProductModelVersion.setUserFlag(Constants.FALSE);
+				historyProductModelVersion.setUpdatedBy(map.get("username").toString());
+				productModelVersionRepository.save(historyProductModelVersion);
+				productModelVersionRepository.save(productModelVersion);
+			}
+			return Constants.TRUE;
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			LOGGER.error("发布失败", e);
 			throw new ServiceException("发布失败");
@@ -195,11 +206,12 @@ public class ProductModelServiceImpl implements ProductModelService {
 
 	}
 	
-	private List modifyList(List list, ProductModelDto productModelDto)
+	private List modifyList(List list)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (list == null || list.size() == 0) {
 			return null;
 		}
+		Map<String,Object> map = getHeaderUser();
 		for (int i = 0; i < list.size(); i++) {
 			Object obj = list.get(i);
 			Field status = obj.getClass().getDeclaredField("status");
@@ -207,7 +219,7 @@ public class ProductModelServiceImpl implements ProductModelService {
 			status.set(obj, Constants.TRUE);
 			Field updatedBy = obj.getClass().getSuperclass().getDeclaredField("updatedBy");
 			updatedBy.setAccessible(true);
-			updatedBy.set(obj, productModelDto.getUpdatedBy());
+			updatedBy.set(obj, map.get("username").toString());
 			list.set(i, obj);
 		}
 		return list;
@@ -283,6 +295,23 @@ public class ProductModelServiceImpl implements ProductModelService {
 			pcmjdList.add(productCommandModelParamJsonDto);
 		}
 		return pcmjdList;
+	}
+
+	@Override
+	public ProductModelDto findProductModels(Long productId) throws ServiceException {
+		List<ProductPropertyModel> ppmList = productPropertyModelRepository.findByProductIdAndDeleteFlag(productId, Constants.FALSE);
+		
+		List<ProductEventModel> pemList = productEventModelRepository.findByProductIdAndDeleteFlag(productId, Constants.FALSE);
+		
+		List<ProductCommandModel> pcmList = productCommandModelRepository.findByProductIdAndDeleteFlag(productId, Constants.FALSE);
+		
+		ProductModelDto productModelDto = new ProductModelDto();
+		productModelDto.setProductId(productId);
+		productModelDto.setProductPropertyModelList(productPropertyModelDtoMapping.sourceToTarget(ppmList));
+		productModelDto.setProductEventModelList(productEventModelDtoMapping.sourceToTarget(pemList));
+		productModelDto.setProductCommandModelList(productCommandModelDtoMapping.sourceToTarget(pcmList));
+		
+		return productModelDto;
 	}
 
 }

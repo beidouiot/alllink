@@ -20,4 +20,6 @@ public interface ProductEventModelRepository
 	List<ProductEventModel> findByDeleteFlag(Boolean deleteFlag);
 	List<ProductEventModel> findByProductIdAndStatusAndDeleteFlag(Long productId, Boolean status, Boolean deleteFlag);
 	
+	List<ProductEventModel> findByProductIdAndDeleteFlag(Long productId, Boolean deleteFlag);
+	
 }

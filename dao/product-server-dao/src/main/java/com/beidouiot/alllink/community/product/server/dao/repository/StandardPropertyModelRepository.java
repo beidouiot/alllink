@@ -20,4 +20,6 @@ public interface StandardPropertyModelRepository extends PagingAndSortingReposit
 	List<StandardPropertyModel> findByDeleteFlag(Boolean deleteFlag);
 	
 	List<StandardPropertyModel> findByProductTypeIdAndDeleteFlag(Long productTypeId,Boolean deleteFlag);
+	
+	List<StandardPropertyModel> findByProductTypeIdAndDeleteFlagAndStatus(Long productTypeId,Boolean deleteFlag,Boolean status);
 }
