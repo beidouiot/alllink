@@ -29,6 +29,7 @@ import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardPrope
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardPropertyModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelAddRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelListRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelListUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -81,13 +82,17 @@ public class StandardPropertyModelController extends BaseController {
 	@ApiOperation(value = "标准属性模型修改", notes = "标准属性模型信息修改")
 	@PostMapping("v1/update")
 	public ResponseEntity<ResultDataRro<Object>> update(
-			@RequestBody @ApiParam(name = "修改标准属性模型信息", value = "标准属性模型信息请求参数", required = true) @Valid StandardPropertyModelUpdateRpo standardPropertyModelUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
+			@RequestBody @ApiParam(name = "修改标准属性模型信息", value = "标准属性模型信息请求参数", required = true) @Valid StandardPropertyModelListUpdateRpo standardPropertyModelListUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("standardPropertyModelUpdateRpo= [ {} ]", standardPropertyModelUpdateRpo);
+			LOGGER.debug("standardPropertyModelListUpdateRpo= [ {} ]", standardPropertyModelListUpdateRpo);
 		}
-		StandardPropertyModelUpdateDto standardPropertyModelUpdateDto = standardPropertyModelUpdateRpoToStandardPropertyModelUpdateDtoMapping.targetToSource(standardPropertyModelUpdateRpo);
-		addUsername(standardPropertyModelUpdateDto, false);
-		standardPropertyModelService.updateEntity(standardPropertyModelUpdateDto);
+		List<StandardPropertyModelUpdateRpo> list = standardPropertyModelListUpdateRpo.getStandardPropertyModelList();
+		for (StandardPropertyModelUpdateRpo standardPropertyModelUpdateRpo : list) {
+			StandardPropertyModelUpdateDto standardPropertyModelUpdateDto = standardPropertyModelUpdateRpoToStandardPropertyModelUpdateDtoMapping.targetToSource(standardPropertyModelUpdateRpo);
+			addUsername(standardPropertyModelUpdateDto, false);
+			standardPropertyModelService.updateEntity(standardPropertyModelUpdateDto);
+		}
+
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	

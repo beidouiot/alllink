@@ -28,6 +28,8 @@ import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductEventModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductEventModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductEventModelAddRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductEventModelListRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductEventModelListUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductEventModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductEventModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -63,13 +65,17 @@ public class ProductEventModelController extends BaseController {
 	@ApiOperation(value = "产品事件模型信息添加", notes = "产品事件模型信息添加")
 	@PostMapping("v1/add")
 	public ResponseEntity<ResultDataRro<Object>> add(
-			@RequestBody @ApiParam(name = "新增产品事件模型信息", value = "产品事件模型信息请求参数", required = true) @Valid ProductEventModelAddRpo productEventModelAddRpo) {
+			@RequestBody @ApiParam(name = "新增产品事件模型信息", value = "产品事件模型信息请求参数", required = true) @Valid ProductEventModelListRpo productEventModelListRpo) {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("productEventModelAddRpo= [ {} ]", productEventModelAddRpo);
+			LOGGER.debug("productEventModelListRpo= [ {} ]", productEventModelListRpo);
 		}
-		ProductEventModelDto productEventModelDto = productEventModelRpoDtoMapping.targetToSource(productEventModelAddRpo);
-		addUsernameAndDate(productEventModelDto, true);
-		productEventModelService.saveEntity(productEventModelDto);
+		List<ProductEventModelAddRpo> list = productEventModelListRpo.getProductEventModelList();
+		for (ProductEventModelAddRpo productEventModelAddRpo : list) {
+			ProductEventModelDto productEventModelDto = productEventModelRpoDtoMapping.targetToSource(productEventModelAddRpo);
+			addUsernameAndDate(productEventModelDto, true);
+			productEventModelService.saveEntity(productEventModelDto);
+		}
+
 
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
@@ -77,13 +83,18 @@ public class ProductEventModelController extends BaseController {
 	@ApiOperation(value = "产品事件模型修改", notes = "产品事件模型信息修改")
 	@PostMapping("v1/update")
 	public ResponseEntity<ResultDataRro<Object>> update(
-			@RequestBody @ApiParam(name = "修改产品事件模型信息", value = "产品事件模型信息请求参数", required = true) @Valid ProductEventModelUpdateRpo productEventModelUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
+			@RequestBody @ApiParam(name = "修改产品事件模型信息", value = "产品事件模型信息请求参数", required = true) @Valid ProductEventModelListUpdateRpo productEventModelListUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("productEventModelUpdateRpo= [ {} ]", productEventModelUpdateRpo);
+			LOGGER.debug("productEventModelListUpdateRpo= [ {} ]", productEventModelListUpdateRpo);
 		}
-		ProductEventModelUpdateDto productEventModelUpdateDto = productEventModelUpdateRpoToProductEventModelUpdateDtoMapping.targetToSource(productEventModelUpdateRpo);
-		addUsername(productEventModelUpdateDto, false);
-		productEventModelService.updateEntity(productEventModelUpdateDto);
+		
+		List<ProductEventModelUpdateRpo> list = productEventModelListUpdateRpo.getProductEventModelList();
+		for (ProductEventModelUpdateRpo productEventModelUpdateRpo : list) {
+			ProductEventModelUpdateDto productEventModelUpdateDto = productEventModelUpdateRpoToProductEventModelUpdateDtoMapping.targetToSource(productEventModelUpdateRpo);
+			addUsername(productEventModelUpdateDto, false);
+			productEventModelService.updateEntity(productEventModelUpdateDto);
+		}
+		
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	

@@ -29,6 +29,7 @@ import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardComma
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardCommandModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelAddRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelListRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelListUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardCommandModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -81,13 +82,19 @@ public class StandardCommandModelController extends BaseController {
 	@ApiOperation(value = "标准指令模型修改", notes = "标准指令模型信息修改")
 	@PostMapping("v1/update")
 	public ResponseEntity<ResultDataRro<Object>> update(
-			@RequestBody @ApiParam(name = "修改标准指令模型信息", value = "标准指令模型信息请求参数", required = true) @Valid StandardCommandModelUpdateRpo standardCommandModelUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
+			@RequestBody @ApiParam(name = "修改标准指令模型信息", value = "标准指令模型信息请求参数", required = true) @Valid StandardCommandModelListUpdateRpo standardCommandModelListUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("standardCommandModelUpdateRpo= [ {} ]", standardCommandModelUpdateRpo);
+			LOGGER.debug("standardCommandModelListUpdateRpo= [ {} ]", standardCommandModelListUpdateRpo);
 		}
-		StandardCommandModelUpdateDto standardCommandModelUpdateDto = standardCommandModelUpdateRpoToStandardCommandModelDtoMapping.targetToSource(standardCommandModelUpdateRpo);
-		addUsername(standardCommandModelUpdateDto, false);
-		standardCommandModelService.updateEntity(standardCommandModelUpdateDto);
+		
+		List<StandardCommandModelUpdateRpo> list = standardCommandModelListUpdateRpo.getStandardCommandModelList();
+		
+		for (StandardCommandModelUpdateRpo standardCommandModelUpdateRpo : list) {
+			StandardCommandModelUpdateDto standardCommandModelUpdateDto = standardCommandModelUpdateRpoToStandardCommandModelDtoMapping.targetToSource(standardCommandModelUpdateRpo);
+			addUsername(standardCommandModelUpdateDto, false);
+			standardCommandModelService.updateEntity(standardCommandModelUpdateDto);
+		}
+		
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	
