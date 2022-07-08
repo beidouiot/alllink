@@ -36,8 +36,23 @@ public class StandardCommandModelUpdateDto implements Serializable {
 	private String params;
 	
 	private String remark;
-	
-	private Boolean status;
 
-	private String updateBy;
+	private String updatedBy;
+	
+	private Long productTypeId;
+	
+	private String strId;
+	
+	public String getStrId() {
+		strId = id == null || id == 0 ? "" : String.valueOf(id);
+		return strId;
+	}
+	
+	private String strProductTypeId;
+	
+	public String getStrProductTypeId() {
+		strProductTypeId = String.valueOf(productTypeId);
+		return strProductTypeId;
+	}
+
 }

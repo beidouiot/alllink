@@ -1,6 +1,6 @@
 package com.beidouiot.alllink.community.common.data.xxo.product.dto;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import com.beidouiot.alllink.community.common.data.xxo.dto.BaseDto;
 
@@ -28,7 +28,12 @@ public class ProductModelDto extends BaseDto {
 	 */
 	private static final long serialVersionUID = -5416913221766919485L;
 	
-	@NotNull(message = "产品id不能为空！")
 	private Long productId;
+	
+	private List<ProductPropertyModelDto> productPropertyModelList;
+	
+	private List<ProductEventModelDto> productEventModelList;
+	
+	private List<ProductCommandModelDto> productCommandModelList;
 
 }

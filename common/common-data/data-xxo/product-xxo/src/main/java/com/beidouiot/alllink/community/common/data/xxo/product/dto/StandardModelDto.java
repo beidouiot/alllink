@@ -2,7 +2,6 @@ package com.beidouiot.alllink.community.common.data.xxo.product.dto;
 
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.beidouiot.alllink.community.common.data.xxo.dto.BaseDto;

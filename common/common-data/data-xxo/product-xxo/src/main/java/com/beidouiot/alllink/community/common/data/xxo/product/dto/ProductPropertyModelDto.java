@@ -50,4 +50,11 @@ public class ProductPropertyModelDto extends BaseDto {
 	@NotNull(message = "产品id不能为空！")
 	private Long productId;
 	
+	private String strId;
+	
+	public String getStrId() {
+		strId = id == null || id == 0 ? "" : String.valueOf(id);
+		return strId;
+	}
+	
 }

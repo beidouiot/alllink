@@ -41,4 +41,11 @@ public class ProductPropertyModelUpdateDto implements Serializable {
 	
 	private String updatedBy;
 	
+	private String strId;
+	
+	public String getStrId() {
+		strId = id == null || id == 0 ? "" : String.valueOf(id);
+		return strId;
+	}
+	
 }

@@ -50,10 +50,6 @@ public class StandardEventModelAddRpo implements Serializable {
 	@ApiModelProperty(value = "备注", dataType = "String", required = false)
 	private String remark;
 	
-	@ApiModelProperty(value = "发布状态", dataType = "Boolean", required = true)
-	@NotNull(message = "发布状态不能为空！")
-	private Boolean status;
-	
 	@ApiModelProperty(value = "产品类别id", dataType = "Boolean", required = true)
 	@NotNull(message = "产品类别id不能为空！")
 	@CheckNumber(message = "产品类别id必须为正整数" )
