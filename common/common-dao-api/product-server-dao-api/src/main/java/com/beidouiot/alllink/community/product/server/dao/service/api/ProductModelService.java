@@ -17,12 +17,21 @@ import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductModelU
 
 public interface ProductModelService extends BaseService<ProductModelDto, ProductModelUpdateDto, ProductModel, Long> {
 
-	public void saveAllEntity(List<ProductModelDto> productModelDtoList) throws ServiceException;
-	
 	/**
 	 * 发布产品物模型
-	 * @param productModelDto          
+	 * @param productId
+	 * @return
 	 * @throws ServiceException
 	 */
-	public void publishModel(ProductModelDto productModelDto) throws ServiceException;
+	Boolean publishModel(Long productId) throws ServiceException;
+	
+	/**
+	 * 查询产品物模型
+	 * @param productId
+	 * @return
+	 * @throws ServiceException
+	 */
+	ProductModelDto findProductModels(Long productId) throws ServiceException;
+	
+	
 }
