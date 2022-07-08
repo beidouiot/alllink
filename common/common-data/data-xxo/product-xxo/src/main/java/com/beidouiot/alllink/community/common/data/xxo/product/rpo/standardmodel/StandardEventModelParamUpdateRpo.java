@@ -49,10 +49,6 @@ public class StandardEventModelParamUpdateRpo implements Serializable {
 	@ApiModelProperty(value = "数据类型数据定义", dataType = "String", required = false)
 	private String dataSpecs;
 	
-	@ApiModelProperty(value = "发布状态", dataType = "Boolean", required = true)
-	@NotNull(message = "发布状态不能为空！")
-	private Boolean status;
-	
 	@ApiModelProperty(value = "参数方向", dataType = "Integer", required = true)
 	@NotNull(message = "参数方向不能为空！")
 	private Integer direction;

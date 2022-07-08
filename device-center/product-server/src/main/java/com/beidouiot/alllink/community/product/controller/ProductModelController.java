@@ -40,17 +40,24 @@ public class ProductModelController extends BaseController {
 	private ProductModelService productModelService;
 	
 	@ApiOperation(value = "产品模型信息发布", notes = "产品模型信息发布")
-	@PostMapping("v1/publish")
-	public ResponseEntity<ResultDataRro<Object>> add(
+	@PostMapping("v1/pubModel")
+	public ResponseEntity<ResultDataRro<Object>> pubModel(
 			@RequestBody @ApiParam(name = "发布产品模型信息", value = "产品模型信息发布请求参数", required = true) @Valid ID id) {
 		if ( LOGGER.isDebugEnabled() ) {
 			LOGGER.debug("id= {}", id);
 		}
-		ProductModelDto productModelDto = new ProductModelDto();
-		productModelDto.setProductId(id.getId());
-		this.addUsernameAndDate(productModelDto, false);
-		productModelService.publishModel(productModelDto);
+		productModelService.publishModel(id.getId());
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
+	}
+	
+	@ApiOperation(value = "查询产品物模型信息", notes = "查询产品物模型信息")
+	@PostMapping("v1/findOne")
+	public ResponseEntity<ResultDataRro<ProductModelDto>> findStandardModel(@RequestBody @ApiParam(name = "产品ID", value = "产品ID", required = true) @Valid ID id) {
+		if ( LOGGER.isDebugEnabled() ) {
+			LOGGER.debug("id= {}", id);
+		}
+		ProductModelDto productModelDto = productModelService.findProductModels(id.getId());
+		return makeSuccessResponseEntity(productModelDto, HttpStatus.OK);
 	}
 	
 }

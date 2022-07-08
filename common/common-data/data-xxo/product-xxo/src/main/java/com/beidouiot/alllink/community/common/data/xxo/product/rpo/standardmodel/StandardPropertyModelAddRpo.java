@@ -51,10 +51,6 @@ public class StandardPropertyModelAddRpo implements Serializable {
 	@NotNull(message = "访问类型不能为空！")
 	private Integer accessType;
 	
-	@ApiModelProperty(value = "发布状态", dataType = "Boolean", required = true)
-	@NotNull(message = "发布状态不能为空！")
-	private Boolean status;
-	
 	@ApiModelProperty(value = "产品类别id", dataType = "Long", required = true)
 	@NotNull(message = "产品类别id不能为空！")
 	@CheckNumber(message = "产品类别id必须为正整数" )

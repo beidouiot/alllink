@@ -37,8 +37,6 @@ public class StandardEventModelUpdateDto implements Serializable {
 	
 	private String remark;
 	
-	private Boolean status;
-	
 	private Long productTypeId;
 	
 	private String updatedBy;

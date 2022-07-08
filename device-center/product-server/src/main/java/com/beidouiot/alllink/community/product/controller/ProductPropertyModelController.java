@@ -28,6 +28,8 @@ import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductPropertyModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductPropertyModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductPropertyModelAddRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductPropertyModelListRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductPropertyModelListUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductPropertyModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductPropertyModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -63,27 +65,34 @@ public class ProductPropertyModelController extends BaseController {
 	@ApiOperation(value = "产品属性模型信息添加", notes = "产品属性模型信息添加")
 	@PostMapping("v1/add")
 	public ResponseEntity<ResultDataRro<Object>> add(
-			@RequestBody @ApiParam(name = "新增产品属性模型信息", value = "产品属性模型信息请求参数", required = true) @Valid ProductPropertyModelAddRpo productPropertyModelAddRpo) {
+			@RequestBody @ApiParam(name = "新增产品属性模型信息", value = "产品属性模型信息请求参数", required = true) @Valid ProductPropertyModelListRpo productPropertyModelListRpo) {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("productPropertyModelAddRpo= [ {} ]", productPropertyModelAddRpo);
+			LOGGER.debug("productPropertyModelListRpo= [ {} ]", productPropertyModelListRpo);
 		}
-		ProductPropertyModelDto productPropertyModelDto = productPropertyModelRpoDtoMapping.targetToSource(productPropertyModelAddRpo);
-		addUsernameAndDate(productPropertyModelDto, true);
-		productPropertyModelService.saveEntity(productPropertyModelDto);
-
+		List<ProductPropertyModelAddRpo> list = productPropertyModelListRpo.getProductPropertyModelList();
+		for (ProductPropertyModelAddRpo productPropertyModelAddRpo : list) {
+			ProductPropertyModelDto productPropertyModelDto = productPropertyModelRpoDtoMapping.targetToSource(productPropertyModelAddRpo);
+			addUsernameAndDate(productPropertyModelDto, true);
+			productPropertyModelService.saveEntity(productPropertyModelDto);
+		}
+		
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	
 	@ApiOperation(value = "产品属性模型修改", notes = "产品属性模型信息修改")
 	@PostMapping("v1/update")
 	public ResponseEntity<ResultDataRro<Object>> update(
-			@RequestBody @ApiParam(name = "修改产品属性模型信息", value = "产品属性模型信息请求参数", required = true) @Valid ProductPropertyModelUpdateRpo productPropertyModelUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
+			@RequestBody @ApiParam(name = "修改产品属性模型信息", value = "产品属性模型信息请求参数", required = true) @Valid ProductPropertyModelListUpdateRpo productPropertyModelListUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("productPropertyModelUpdateRpo= [ {} ]", productPropertyModelUpdateRpo);
+			LOGGER.debug("productPropertyModelListUpdateRpo= [ {} ]", productPropertyModelListUpdateRpo);
 		}
-		ProductPropertyModelUpdateDto productPropertyModelUpdateDto = productPropertyModelUpdateRpoToProductPropertyModelUpdateDtoMapping.targetToSource(productPropertyModelUpdateRpo);
-		addUsername(productPropertyModelUpdateDto, false);
-		productPropertyModelService.updateEntity(productPropertyModelUpdateDto);
+		List<ProductPropertyModelUpdateRpo> list = productPropertyModelListUpdateRpo.getProductPropertyModelList();
+		for (ProductPropertyModelUpdateRpo productPropertyModelUpdateRpo : list) {
+			ProductPropertyModelUpdateDto productPropertyModelUpdateDto = productPropertyModelUpdateRpoToProductPropertyModelUpdateDtoMapping.targetToSource(productPropertyModelUpdateRpo);
+			addUsername(productPropertyModelUpdateDto, false);
+			productPropertyModelService.updateEntity(productPropertyModelUpdateDto);
+		}
+		
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	

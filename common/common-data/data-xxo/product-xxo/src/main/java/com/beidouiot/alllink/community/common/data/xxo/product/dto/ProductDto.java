@@ -1,5 +1,6 @@
 package com.beidouiot.alllink.community.common.data.xxo.product.dto;
 
+import com.beidouiot.alllink.community.common.base.enums.ProductDeviceTypeEnum;
 import com.beidouiot.alllink.community.common.data.xxo.dto.BaseDto;
 
 import lombok.AllArgsConstructor;
@@ -43,5 +44,26 @@ public class ProductDto extends BaseDto{
 	private Boolean copyFlag;
 	
 	private Long productTypeId;
+	
+	private String strProductDeviceType;
+	
+	public String getStrProductDeviceType() {
+		strProductDeviceType =  ProductDeviceTypeEnum.getMsg(productDeviceType);
+		return strProductDeviceType;
+	}
+	
+	private String strId;
+	
+	public String getStrId() {
+		strId = id == null || id == 0 ? "" : String.valueOf(id);
+		return strId;
+	}
+	
+	private String strProductTypeId;
+	
+	public String getStrProductTypeId() {
+		strProductTypeId = productTypeId == null || productTypeId == 0 ? "" : String.valueOf(productTypeId);
+		return strProductTypeId;
+	}
 
 }

@@ -37,9 +37,21 @@ public class StandardPropertyModelUpdateDto implements Serializable {
 	
 	private Integer accessType;
 	
-	private Boolean status;
-	
 	private Long productTypeId;
 	
 	private String updatedBy;
+	
+	private String strId;
+	
+	public String getStrId() {
+		strId = id == null || id == 0 ? "" : String.valueOf(id);
+		return strId;
+	}
+	
+	private String strProductTypeId;
+	
+	public String getStrProductTypeId() {
+		strProductTypeId = String.valueOf(productTypeId);
+		return strProductTypeId;
+	}
 }

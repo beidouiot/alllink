@@ -29,6 +29,7 @@ import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardEvent
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardEventModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelAddRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelListRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelListUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardEventModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -81,13 +82,18 @@ public class StandardEventModelController extends BaseController {
 	@ApiOperation(value = "标准事件模型修改", notes = "标准事件模型信息修改")
 	@PostMapping("v1/update")
 	public ResponseEntity<ResultDataRro<Object>> update(
-			@RequestBody @ApiParam(name = "修改标准事件模型信息", value = "标准事件模型信息请求参数", required = true) @Valid StandardEventModelUpdateRpo standardEventModelUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
+			@RequestBody @ApiParam(name = "修改标准事件模型信息", value = "标准事件模型信息请求参数", required = true) @Valid StandardEventModelListUpdateRpo  standardEventModelListUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("standardEventModelUpdateRpo= [ {} ]", standardEventModelUpdateRpo);
+			LOGGER.debug("standardEventModelListUpdateRpo= [ {} ]", standardEventModelListUpdateRpo);
 		}
-		StandardEventModelUpdateDto standardEventModelUpdateDto = standardEventModelUpdateRpoToStandardEventModelUpdateDtoMapping.targetToSource(standardEventModelUpdateRpo);
-		addUsername(standardEventModelUpdateDto, false);
-		standardEventModelService.updateEntity(standardEventModelUpdateDto);
+		
+		List<StandardEventModelUpdateRpo> list = standardEventModelListUpdateRpo.getStandardEventModelList();
+		for (StandardEventModelUpdateRpo standardEventModelUpdateRpo : list) {
+			StandardEventModelUpdateDto standardEventModelUpdateDto = standardEventModelUpdateRpoToStandardEventModelUpdateDtoMapping.targetToSource(standardEventModelUpdateRpo);
+			addUsername(standardEventModelUpdateDto, false);
+			standardEventModelService.updateEntity(standardEventModelUpdateDto);
+		}
+
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	

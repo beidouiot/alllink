@@ -39,6 +39,8 @@ public class StandardCommandModelParamUpdateDto implements Serializable {
 	
 	private Integer direction;
 	
-	private String updatedBy;
+	private String updatedBy;	
+	
+	private String strId;
 	
 }

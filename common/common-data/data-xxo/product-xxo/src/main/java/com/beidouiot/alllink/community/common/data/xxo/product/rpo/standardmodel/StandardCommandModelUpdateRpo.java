@@ -51,8 +51,10 @@ public class StandardCommandModelUpdateRpo implements Serializable {
 	@ApiModelProperty(value = "备注", dataType = "String", required = false)
 	private String remark;
 	
-	@ApiModelProperty(value = "发布状态", dataType = "Boolean", required = true)
-	@NotNull(message = "发布状态不能为空！")
-	private Boolean status;
+	@ApiModelProperty(value = "产品类别Id", dataType = "Long", required = true)
+	@NotNull(message = "产品类别Id不能为空！")
+	@CheckNumber(message = "产品类别Id必须为正整数" )
+	private Long productTypeId;
+
 	
 }

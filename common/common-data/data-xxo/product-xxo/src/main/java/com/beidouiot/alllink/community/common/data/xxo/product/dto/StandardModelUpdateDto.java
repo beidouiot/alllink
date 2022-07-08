@@ -36,8 +36,6 @@ public class StandardModelUpdateDto implements Serializable {
 	
 	private Integer accessType;
 	
-	private Boolean status;
-	
 	private Long productTypeId;
 	
 	private String updatedBy;

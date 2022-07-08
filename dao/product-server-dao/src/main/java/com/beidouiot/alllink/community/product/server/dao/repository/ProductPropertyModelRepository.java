@@ -21,4 +21,5 @@ public interface ProductPropertyModelRepository
 	
 	List<ProductPropertyModel> findByProductIdAndStatusAndDeleteFlag(Long productId, Boolean status, Boolean deleteFlag);
 	
+	List<ProductPropertyModel> findByProductIdAndDeleteFlag(Long productId, Boolean deleteFlag);
 }

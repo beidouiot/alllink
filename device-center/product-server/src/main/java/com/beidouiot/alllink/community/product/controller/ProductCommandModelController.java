@@ -28,6 +28,8 @@ import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductCommandModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductCommandModelUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductCommandModelAddRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductCommandModelListRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductCommandModelListUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductCommandModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.productmodel.ProductCommandModelUpdateRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
@@ -63,27 +65,35 @@ public class ProductCommandModelController extends BaseController {
 	@ApiOperation(value = "产品指令模型信息添加", notes = "产品指令模型信息添加")
 	@PostMapping("v1/add")
 	public ResponseEntity<ResultDataRro<Object>> add(
-			@RequestBody @ApiParam(name = "新增产品指令模型信息", value = "产品指令模型信息请求参数", required = true) @Valid ProductCommandModelAddRpo productCommandModelAddRpo) {
+			@RequestBody @ApiParam(name = "新增产品指令模型信息", value = "产品指令模型信息请求参数", required = true) @Valid ProductCommandModelListRpo productCommandModelListRpo) {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("productCommandModelAddRpo= [ {} ]", productCommandModelAddRpo);
+			LOGGER.debug("productCommandModelListRpo= [ {} ]", productCommandModelListRpo);
 		}
-		ProductCommandModelDto productCommandModelDto = productCommandModelRpoDtoMapping.targetToSource(productCommandModelAddRpo);
-		addUsernameAndDate(productCommandModelDto, true);
-		productCommandModelService.saveEntity(productCommandModelDto);
-
+		List<ProductCommandModelAddRpo> list = productCommandModelListRpo.getProductCommandModelList();
+		for (ProductCommandModelAddRpo productCommandModelAddRpo : list) {
+			ProductCommandModelDto productCommandModelDto = productCommandModelRpoDtoMapping.targetToSource(productCommandModelAddRpo);
+			addUsernameAndDate(productCommandModelDto, true);
+			productCommandModelService.saveEntity(productCommandModelDto);
+		}
+		
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	
 	@ApiOperation(value = "产品指令模型修改", notes = "产品指令模型信息修改")
 	@PostMapping("v1/update")
 	public ResponseEntity<ResultDataRro<Object>> update(
-			@RequestBody @ApiParam(name = "修改产品指令模型信息", value = "产品指令模型信息请求参数", required = true) @Valid ProductCommandModelUpdateRpo productCommandModelUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
+			@RequestBody @ApiParam(name = "修改产品指令模型信息", value = "产品指令模型信息请求参数", required = true) @Valid ProductCommandModelListUpdateRpo productCommandModelListUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		if ( LOGGER.isDebugEnabled() ) {
-			LOGGER.debug("productCommandModelUpdateRpo= [ {} ]", productCommandModelUpdateRpo);
+			LOGGER.debug("productCommandModelListUpdateRpo= [ {} ]", productCommandModelListUpdateRpo);
 		}
-		ProductCommandModelUpdateDto productCommandModelUpdateDto = ProductCommandModelUpdateRpoToProductCommandModelUpdateDtoMapping.targetToSource(productCommandModelUpdateRpo);
-		addUsername(productCommandModelUpdateDto, false);
-		productCommandModelService.updateEntity(productCommandModelUpdateDto);
+		
+		List<ProductCommandModelUpdateRpo> list = productCommandModelListUpdateRpo.getProductCommandModelList();
+		for (ProductCommandModelUpdateRpo productCommandModelUpdateRpo : list) {
+			ProductCommandModelUpdateDto productCommandModelUpdateDto = ProductCommandModelUpdateRpoToProductCommandModelUpdateDtoMapping.targetToSource(productCommandModelUpdateRpo);
+			addUsername(productCommandModelUpdateDto, false);
+			productCommandModelService.updateEntity(productCommandModelUpdateDto);
+		}
+		
 		return makeSuccessResponseEntity(HttpStatus.CREATED);
 	}
 	
