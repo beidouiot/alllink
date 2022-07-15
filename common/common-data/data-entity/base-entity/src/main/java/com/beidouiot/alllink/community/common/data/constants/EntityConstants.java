@@ -50,7 +50,7 @@ public class EntityConstants {
 	public static final String ACTIVATION_TIME = "activation_time";
 	public static final String ACTIVATION_TIME_COLUMN_DEFINITION = "datetime comment '激活时间'";
 	public static final String ENABLE_FLAG = "enable_flag";
-	public static final String ENABLE_FLAG_COLUMN_DEFINITION = "bit comment '激活时间'";
+	public static final String ENABLE_FLAG_COLUMN_DEFINITION = "bit comment '是否启用'";
 	public static final String LEVEL = "level";
 	public static final String LEVEL_COLUMN_DEFINITION = "int comment '所在树结构层数'";
 	public static final String LEAF_FLAG = "leaf_flag";
@@ -435,6 +435,10 @@ public class EntityConstants {
 	public static final String DEVICE_UPGRADE_INFO_UPGRADE_TIME_COLUMN_DEFINITION = "datetime comment '固件升级时间'";
 
 	public static final String DEVICE_NEW_DATA = "device_new_data";
-//	public static final String DEVICE_UPGRADE_INFO_UPGRADE_LOGS = "upgrade_logs";
-//	public static final String DEVICE_UPGRADE_INFO_UPGRADE_LOGS_COLUMN_DEFINITION = "varchar(5000) comment '升级日志'";
+	public static final String DEVICE_NEW_DATA_MODEL_CODE = "model_code";
+	public static final String DEVICE_NEW_DATA_MODEL_CODE_COLUMN_DEFINITION = "varchar(50) comment '物模型标识'";
+	public static final String DEVICE_NEW_DATA_MODEL_TYPE = "model_type";
+	public static final String DEVICE_NEW_DATA_MODEL_TYPE_COLUMN_DEFINITION = "int comment '物模型类型(属性模型：1，事件模型：2，指令模型：3)'";
+	public static final String DEVICE_NEW_DATA_RECEIVED_DATA = "received_data";
+	public static final String DEVICE_NEW_DATA_RECEIVED_DATA_COLUMN_DEFINITION = "varchar(2000) comment '物模型数据'";
 }
