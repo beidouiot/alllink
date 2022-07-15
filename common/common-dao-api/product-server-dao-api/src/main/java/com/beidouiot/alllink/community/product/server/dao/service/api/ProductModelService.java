@@ -1,7 +1,5 @@
 package com.beidouiot.alllink.community.product.server.dao.service.api;
 
-import java.util.List;
-
 import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.dao.api.service.BaseService;
 import com.beidouiot.alllink.community.common.data.entity.product.ProductModel;
