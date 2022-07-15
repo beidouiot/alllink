@@ -61,4 +61,7 @@ public class Product extends BaseEntity {
 	
 	@Column(name = EntityConstants.PRODUCT_TYPE_ID, nullable = false, columnDefinition = EntityConstants.PRODUCT_TYPE_ID_COLUMN_DEFINITION)
 	private Long productTypeId;
+	
+	@Column(name = EntityConstants.TENANT_ID, nullable = true, columnDefinition = EntityConstants.TENANT_ID_COLUMN_DEFINITION)
+	private Long tenantId;
 }
