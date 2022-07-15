@@ -313,5 +313,22 @@ public class ProductModelServiceImpl implements ProductModelService {
 		
 		return productModelDto;
 	}
+	
+	@Override
+	public ProductModelDto findPubProductModels(Long productId) throws ServiceException {
+		List<ProductPropertyModel> ppmList = productPropertyModelRepository.findByProductIdAndStatusAndDeleteFlag(productId, Constants.TRUE, Constants.FALSE);
+		
+		List<ProductEventModel> pemList = productEventModelRepository.findByProductIdAndStatusAndDeleteFlag(productId, Constants.TRUE, Constants.FALSE);
+		
+		List<ProductCommandModel> pcmList = productCommandModelRepository.findByProductIdAndStatusAndDeleteFlag(productId, Constants.TRUE, Constants.FALSE);
+		
+		ProductModelDto productModelDto = new ProductModelDto();
+		productModelDto.setProductId(productId);
+		productModelDto.setProductPropertyModelList(productPropertyModelDtoMapping.sourceToTarget(ppmList));
+		productModelDto.setProductEventModelList(productEventModelDtoMapping.sourceToTarget(pemList));
+		productModelDto.setProductCommandModelList(productCommandModelDtoMapping.sourceToTarget(pcmList));
+		
+		return productModelDto;
+	}
 
 }
