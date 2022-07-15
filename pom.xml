@@ -56,6 +56,7 @@
   <modules>
   	<module>common</module>
   	<module>dao</module>
+  	<module>feign</module>
   	<module>api-gateway-web</module>
   	<module>oauth2-auth-server-center</module>
   	<module>user-center</module>
@@ -115,6 +116,11 @@
 		  <version>${project.version}</version>
 		</dependency>
 		<dependency>
+		  <groupId>com.beidouiot.alllink.community.common.data.xxo</groupId>
+		  <artifactId>device-xxo</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+		<dependency>
 		  <groupId>com.beidouiot.alllink.community.common.data.entity</groupId>
 		  <artifactId>base-entity</artifactId>
 		  <version>${project.version}</version>
@@ -127,6 +133,11 @@
 		<dependency>
 		  <groupId>com.beidouiot.alllink.community.common.data.entity</groupId>
 		  <artifactId>product-entity</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.beidouiot.alllink.community.common.data.entity</groupId>
+		  <artifactId>device-entity</artifactId>
 		  <version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -145,6 +156,11 @@
 		  <version>${project.version}</version>
 		</dependency>
 		<dependency>
+		  <groupId>com.beidouiot.alllink.community.common.data.mapping</groupId>
+		  <artifactId>device-mapping</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+		<dependency>
 		  <groupId>com.beidouiot.alllink.community.common.dao.api</groupId>
 		  <artifactId>base-service-api</artifactId>
 		  <version>${project.version}</version>
@@ -160,6 +176,11 @@
 		  <version>${project.version}</version>
 		</dependency>
 		<dependency>
+		  <groupId>com.beidouiot.alllink.community.common.dao.api</groupId>
+		  <artifactId>device-service-dao-api</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+		<dependency>
 		  <groupId>com.beidouiot.alllink.community.dao</groupId>
 		  <artifactId>user-center-dao</artifactId>
 		  <version>${project.version}</version>
@@ -169,6 +190,17 @@
 		  <artifactId>product-server-dao</artifactId>
 		  <version>${project.version}</version>
 		</dependency>
+		<dependency>
+		  <groupId>com.beidouiot.alllink.community.dao</groupId>
+  		  <artifactId>device-service-dao</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.beidouiot.alllink.community.dao</groupId>
+		  <artifactId>product-server-dao</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+
 		<dependency>
 		  <groupId>com.beidouiot.alllink.community</groupId>
 		  <artifactId>utils</artifactId>
@@ -184,7 +216,16 @@
 		  <artifactId>multistep-chache</artifactId>
 		  <version>${project.version}</version>
 		</dependency>
-
+		<dependency>
+		  <groupId>com.beidouiot.alllink.community.feign</groupId>
+		  <artifactId>user-feign</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.beidouiot.alllink.community.feign</groupId>
+		  <artifactId>product-feign</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
