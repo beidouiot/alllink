@@ -129,7 +129,7 @@ public class ProductController extends BaseController {
 		return makeSuccessResponseEntity(smartPage, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "查询产品", notes = "根据id产品")
+	@ApiOperation(value = "查询产品", notes = "根据id查询产品")
 	@PostMapping("v1/findOne")
 	public ResponseEntity<?> findOne(
 			@RequestBody @ApiParam(name = "产品ID", value = "产品ID", required = true) @Valid ID id) {

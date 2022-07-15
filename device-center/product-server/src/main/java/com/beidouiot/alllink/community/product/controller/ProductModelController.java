@@ -60,4 +60,14 @@ public class ProductModelController extends BaseController {
 		return makeSuccessResponseEntity(productModelDto, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "查询已发布产品物模型信息", notes = "查询已发布产品物模型信息")
+	@PostMapping("v1/findPubModel")
+	public ResponseEntity<ResultDataRro<ProductModelDto>> findPubProductModel(@RequestBody @ApiParam(name = "产品ID", value = "产品ID", required = true) @Valid ID id) {
+		if ( LOGGER.isDebugEnabled() ) {
+			LOGGER.debug("id= {}", id);
+		}
+		ProductModelDto productModelDto = productModelService.findPubProductModels(id.getId());
+		return makeSuccessResponseEntity(productModelDto, HttpStatus.OK);
+	}
+	
 }
