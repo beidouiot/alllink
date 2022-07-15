@@ -26,7 +26,6 @@ import com.beidouiot.alllink.community.common.data.mapping.product.server.produc
 import com.beidouiot.alllink.community.common.data.mapping.product.server.product.ProductUpdateRpoToProductUpdateDtoMapping;
 import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductDto;
-import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductTypeDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.product.ProductAddRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.product.ProductSearchRpo;
