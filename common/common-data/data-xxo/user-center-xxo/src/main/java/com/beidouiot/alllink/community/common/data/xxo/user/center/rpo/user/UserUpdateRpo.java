@@ -92,10 +92,6 @@ public class UserUpdateRpo implements Serializable {
 	@Length(min=0, max=200, message="用户描述长度不能超过200个字符")
 	private String descr;
 	
-	@ApiModelProperty(value = "用户工号/学号等， length = 50", dataType = "String", required = false)
-	@Length(min=0, max=50, message="用户工号/学号长度不能超过50个字符")
-	private String code;
-	
 	@ApiModelProperty(value = "证件号， length = 100", dataType = "String", required = false)
 	@Length(min=0, max=100, message="证件号长度不能超过100个字符")
 	private String identityNo;
@@ -106,15 +102,5 @@ public class UserUpdateRpo implements Serializable {
 	
 	@ApiModelProperty(value = "所属租户（租户ID）", dataType = "Long", required = false)
 	private Long tenantId;
-	
-	@ApiModelProperty(value = "所属客户（客户ID）", dataType = "Long", required = false)
-	private Long customerId;
-	
-	@ApiModelProperty(value = "所属园区/小区（园区/小区ID）", dataType = "Long", required = false)
-	private Long parkId;
-	
-	@ApiModelProperty(value = "所属系统编号", dataType = "String", required = false)
-	@Length(min=0, max=50, message="系统编号长度不能超过50个字符")
-	private String systemCode;
 
 }

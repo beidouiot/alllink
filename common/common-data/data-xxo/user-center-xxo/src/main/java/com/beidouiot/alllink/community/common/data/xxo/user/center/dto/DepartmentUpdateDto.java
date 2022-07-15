@@ -42,8 +42,6 @@ public class DepartmentUpdateDto implements Serializable {
 	
 	private Long tenantId;
 	
-	private Long customerId;
-	
 	private String updatedBy;
 	
 	private String strId;
@@ -59,14 +57,7 @@ public class DepartmentUpdateDto implements Serializable {
 		strTenantId = tenantId == null ? "" : String.valueOf(tenantId);
 		return strTenantId;
 	}
-	
-	private String strCustomerId;
-	
-	public String getStrCustomerId() {
-		strCustomerId = customerId == null ? "" : String.valueOf(customerId);
-		return strCustomerId;
-	}
-	
+
 	private String strPid;
 	
 	public String getStrPid() {

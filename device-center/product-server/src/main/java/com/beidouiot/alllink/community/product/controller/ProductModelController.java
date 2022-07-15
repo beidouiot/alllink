@@ -29,6 +29,7 @@ import io.swagger.annotations.ApiParam;
 * @author longww
 * @date 2022年2月17日
 */
+
 @Api(tags = "产品模型管理")
 @RestController
 @RequestMapping(value = ServiceConstants.PRODUCT_MODEL_URI_BASE, produces = "application/json; charset=UTF-8")
@@ -57,6 +58,16 @@ public class ProductModelController extends BaseController {
 			LOGGER.debug("id= {}", id);
 		}
 		ProductModelDto productModelDto = productModelService.findProductModels(id.getId());
+		return makeSuccessResponseEntity(productModelDto, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "查询已发布产品物模型信息", notes = "查询已发布产品物模型信息")
+	@PostMapping("v1/findPubModel")
+	public ResponseEntity<ResultDataRro<ProductModelDto>> findPubProductModel(@RequestBody @ApiParam(name = "产品ID", value = "产品ID", required = true) @Valid ID id) {
+		if ( LOGGER.isDebugEnabled() ) {
+			LOGGER.debug("id= {}", id);
+		}
+		ProductModelDto productModelDto = productModelService.findPubProductModels(id.getId());
 		return makeSuccessResponseEntity(productModelDto, HttpStatus.OK);
 	}
 	

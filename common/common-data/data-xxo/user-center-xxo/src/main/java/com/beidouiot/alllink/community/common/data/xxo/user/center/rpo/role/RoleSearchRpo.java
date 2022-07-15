@@ -42,8 +42,5 @@ public class RoleSearchRpo extends SearchBaseRpo implements Serializable {
 	
 	@ApiModelProperty(value = "所属租户Id", dataType = "Long", required = false)
 	private Long tenantId;
-	
-	@ApiModelProperty(value = "所属客户Id", dataType = "Long", required = false)
-	private Long customerId;
 
 }

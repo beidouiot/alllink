@@ -61,8 +61,6 @@ public class UserUpdateDto implements Serializable {
 	
 	private String identityType;
 	
-	private Long parkId;
-	
 	private String updatedBy;
 	
 	public String getStrId() {

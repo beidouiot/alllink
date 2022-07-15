@@ -1,7 +1,5 @@
 package com.beidouiot.alllink.community.product.server.dao.service.api;
 
-import java.util.List;
-
 import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.dao.api.service.BaseService;
 import com.beidouiot.alllink.community.common.data.entity.product.ProductModel;
@@ -33,5 +31,12 @@ public interface ProductModelService extends BaseService<ProductModelDto, Produc
 	 */
 	ProductModelDto findProductModels(Long productId) throws ServiceException;
 	
+	/**
+	 * 查询发布的物模型
+	 * @param productId
+	 * @return
+	 * @throws ServiceException
+	 */
+	public ProductModelDto findPubProductModels(Long productId) throws ServiceException;
 	
 }

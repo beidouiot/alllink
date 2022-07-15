@@ -22,8 +22,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.beidouiot.alllink.community.common.base.enums.ErrorCodeConstants;
 import com.beidouiot.alllink.community.common.base.exception.CanNotDeleteDataException;
@@ -100,7 +98,10 @@ public class UserServiceImpl implements UserService {
 			throw new DataExistException("用户名或邮箱或手机号已存在");
 		}
 		User user = userDtoMapping.targetToSource(userDto);
-		
+		Map<String,Object> map = getHeaderUser();
+		String strTenantId = map.get("tenantId").toString();
+		Long tenantId = strTenantId == null || strTenantId.equals("") ? null : Long.valueOf(strTenantId);
+		user.setTenantId(tenantId);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}

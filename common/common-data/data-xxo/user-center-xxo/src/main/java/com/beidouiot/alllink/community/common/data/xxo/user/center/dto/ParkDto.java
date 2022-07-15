@@ -47,10 +47,6 @@ public class ParkDto extends BaseDto {
 	
 	private Long tenantId;
 	
-	private Long customerId;
-	
-	private String systemCode;
-	
 	private String strId;
 	
 	public String getStrId() {
@@ -64,14 +60,7 @@ public class ParkDto extends BaseDto {
 		strTenantId = tenantId == null ? "" : String.valueOf(tenantId);
 		return strTenantId;
 	}
-	
-	private String strCustomerId;
-	
-	public String getStrCustomerId() {
-		strCustomerId = customerId == null ? "" : String.valueOf(customerId);
-		return strCustomerId;
-	}
-	
+
 	private String strPid;
 	
 	public String getStrPid() {

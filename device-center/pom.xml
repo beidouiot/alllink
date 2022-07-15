@@ -11,8 +11,8 @@
   <name>device-center</name>
   <packaging>pom</packaging>
   <description>设备中心</description>
-
   <modules>
     <module>product-server</module>
+    <module>device-server</module>
   </modules>
 </project>

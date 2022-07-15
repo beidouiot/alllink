@@ -60,9 +60,6 @@ public class UserSearchRpo extends SearchBaseRpo implements Serializable {
 	@ApiModelProperty(value = "用户描述", dataType = "String", required = false)
 	private String descr;
 	
-	@ApiModelProperty(value = "用户工号/学号等", dataType = "String", required = false)
-	private String code;
-	
 	@ApiModelProperty(value = "证件号", dataType = "String", required = false)
 	private String identityNo;
 	
@@ -71,10 +68,4 @@ public class UserSearchRpo extends SearchBaseRpo implements Serializable {
 	
 	@ApiModelProperty(value = "所属租户（租户ID）", dataType = "Long", required = false)
 	private Long tenantId;
-	
-	@ApiModelProperty(value = "所属客户（客户ID）", dataType = "Long", required = false)
-	private Long customerId;
-	
-	@ApiModelProperty(value = "所属园区/小区（园区/小区ID）", dataType = "Long", required = false)
-	private Long parkId;
 }

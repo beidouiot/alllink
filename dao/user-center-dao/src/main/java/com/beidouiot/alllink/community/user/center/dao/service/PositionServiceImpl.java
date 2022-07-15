@@ -14,7 +14,6 @@ import com.beidouiot.alllink.community.common.base.exception.CanNotDeleteDataExc
 import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.base.utils.Constants;
 import com.beidouiot.alllink.community.common.data.entity.user.center.Position;
-import com.beidouiot.alllink.community.common.data.entity.user.center.User;
 import com.beidouiot.alllink.community.common.data.entity.user.center.UserPosition;
 import com.beidouiot.alllink.community.common.data.mapping.user.center.position.PositionDtoMapping;
 import com.beidouiot.alllink.community.common.data.mapping.user.center.position.PositionUpdateDtoMapping;
@@ -23,7 +22,6 @@ import com.beidouiot.alllink.community.common.data.xxo.user.center.dto.PositionD
 import com.beidouiot.alllink.community.common.data.xxo.user.center.dto.PositionUpdateDto;
 import com.beidouiot.alllink.community.user.center.dao.repository.PositionRepository;
 import com.beidouiot.alllink.community.user.center.dao.repository.UserPositionRepository;
-import com.beidouiot.alllink.community.user.center.dao.repository.UserRepository;
 import com.beidouiot.alllink.community.user.center.dao.service.api.PositionService;
 
 /**
@@ -43,9 +41,6 @@ public class PositionServiceImpl implements PositionService {
 	private UserPositionRepository userPositionRepository;
 
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
 	private PositionDtoMapping positionDtoMapping;
 	
 	@Autowired
@@ -56,10 +51,9 @@ public class PositionServiceImpl implements PositionService {
 		LOGGER.debug("positionDto = [ {} ]", positionDto);
 		Position position = positionDtoMapping.targetToSource(positionDto);
 		Map<String, Object> map = getHeaderUser();
-		Long userId = Long.valueOf(map.get("id").toString());
-		User user = userRepository.findById(userId).get();
-		position.setTenantId(user.getTenantId());
-		position.setCustomerId(user.getCustomerId());
+		String strTenantId = map.get("tenantId").toString();
+		Long tenantId = strTenantId == null || strTenantId.equals("") ? null : Long.valueOf(strTenantId);
+		position.setTenantId(tenantId);
 		positionRepository.save(position);
 
 	}

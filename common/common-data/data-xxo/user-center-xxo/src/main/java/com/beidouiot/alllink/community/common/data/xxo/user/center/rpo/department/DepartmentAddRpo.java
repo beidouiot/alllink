@@ -55,10 +55,4 @@ public class DepartmentAddRpo implements Serializable {
 	
 	@ApiModelProperty(value = "租户Id", dataType = "Long")
 	private Long tenantId;
-	
-	@ApiModelProperty(value = "客户Id", dataType = "Long")
-	private Long customerId;
-	
-	@ApiModelProperty(value = "系统编号", dataType = "String")
-	private String systemCode;
 }

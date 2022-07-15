@@ -67,7 +67,4 @@ public class TenantAddRpo implements Serializable {
 	@NotNull(message = "租户状态不能为空！")
 	private Boolean status;
 	
-	@ApiModelProperty(value = "所属系统编号, length = 50", dataType = "String", required = false)
-	private String systemCode;
-	
 }

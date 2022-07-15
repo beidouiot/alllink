@@ -37,8 +37,6 @@ public class PositionUpdateDto implements Serializable {
 	
 	private Long tenantId;
 	
-	private Long customerId;
-	
 	private String updatedBy;
 	
 	private String strId;
@@ -55,10 +53,4 @@ public class PositionUpdateDto implements Serializable {
 		return strTenantId;
 	}
 	
-	private String strCustomerId;
-	
-	public String getStrCustomerId() {
-		strCustomerId = customerId == null ? "" : String.valueOf(customerId);
-		return strCustomerId;
-	}
 }

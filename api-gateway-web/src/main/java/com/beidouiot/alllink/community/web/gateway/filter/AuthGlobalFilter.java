@@ -51,6 +51,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             String realToken = token.replace(Constants.BEARER, "");
             JWSObject jwsObject = JWSObject.parse(realToken);
 			String userStr = jwsObject.getPayload().toString();
+			
 			JSONObject jsonObject = JSONObject.parseObject(userStr);
 	        String jti = jsonObject.getString(Constants.JTI);
 	        Boolean isBlack = redisTemplate.hasKey(CacheKeyConstants.TOKEN_BLACKLIST_PREFIX + jti);
@@ -67,6 +68,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 	        userJson.put("username", jsonObject.getString(Constants.USER_NAME));
 	        userJson.put("name", jsonObject.getString(Constants.NAME));
 	        userJson.put("exp", jsonObject.getString(Constants.EXP));
+	        userJson.put("tenantId", jsonObject.getString(Constants.TENANT_ID));
 	        userJson.put("jti", jti);
             ServerHttpRequest request = exchange.getRequest().mutate().header(Constants.USER, userJson.toJSONString()).build();
             exchange = exchange.mutate().request(request).build();

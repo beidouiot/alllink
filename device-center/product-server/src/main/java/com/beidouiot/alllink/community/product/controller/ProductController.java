@@ -26,7 +26,6 @@ import com.beidouiot.alllink.community.common.data.mapping.product.server.produc
 import com.beidouiot.alllink.community.common.data.mapping.product.server.product.ProductUpdateRpoToProductUpdateDtoMapping;
 import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductDto;
-import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductTypeDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.product.ProductAddRpo;
 import com.beidouiot.alllink.community.common.data.xxo.product.rpo.product.ProductSearchRpo;
@@ -129,7 +128,7 @@ public class ProductController extends BaseController {
 		return makeSuccessResponseEntity(smartPage, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "查询产品", notes = "根据id产品")
+	@ApiOperation(value = "查询产品", notes = "根据id查询产品")
 	@PostMapping("v1/findOne")
 	public ResponseEntity<?> findOne(
 			@RequestBody @ApiParam(name = "产品ID", value = "产品ID", required = true) @Valid ID id) {

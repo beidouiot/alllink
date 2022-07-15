@@ -60,7 +60,4 @@ public class CustomerSearchRpo extends SearchBaseRpo {
 	@NotNull(message = "租户id不能为空！")
 	@CheckNumber(message = "id必须为正整数")
 	private Long tenantId;
-	
-	@ApiModelProperty(value = "系统编号", dataType = "String", required = false)
-	private String systemCode;
 }

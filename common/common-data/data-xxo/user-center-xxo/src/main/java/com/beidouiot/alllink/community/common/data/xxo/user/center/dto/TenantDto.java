@@ -49,8 +49,6 @@ public class TenantDto extends BaseDto {
 	
 	private String strStatus;
 	
-	private String systemCode;
-	
 	private String strId;
 	
 	public String getStrId() {

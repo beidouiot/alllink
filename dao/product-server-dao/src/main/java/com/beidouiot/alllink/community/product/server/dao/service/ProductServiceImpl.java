@@ -82,7 +82,12 @@ public class ProductServiceImpl implements ProductService {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("productDto = [ {} ]", productDto);
 		}
+		
 		Product product = productDtoMapping.targetToSource(productDto);
+		Map<String,Object> map = getHeaderUser();
+		String strTenantId = map.get("tenantId").toString();
+		Long tenantId = strTenantId == null || strTenantId.equals("") ? null : Long.valueOf(strTenantId);
+		product.setTenantId(tenantId);
 		productRepository.save(product);
 		if (productDto.getCopyFlag()) {
 			List<StandardPropertyModel> spList = standardPropertyModelRepository
@@ -195,12 +200,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductDto> findAll() throws ServiceException {
 		List<Product> list = productRepository.findByDeleteFlag(Constants.FALSE);
-		List<ProductDto> dtoList = new ArrayList<ProductDto>();
-		for (Product product : list) {
-			ProductDto productDto = productDtoMapping.sourceToTarget(product);
-			dtoList.add(productDto);
-		}
-		return dtoList;
+		return productDtoMapping.sourceToTarget(list);
 	}
 
 	@Override
