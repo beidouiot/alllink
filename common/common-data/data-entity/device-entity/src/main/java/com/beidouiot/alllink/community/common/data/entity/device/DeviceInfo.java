@@ -36,7 +36,7 @@ public class DeviceInfo extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 6858072990172960726L;
 	
-	@Column(name = EntityConstants.NAME, nullable = false, columnDefinition = EntityConstants.INDUSTRY_TYPE_NAME_COLUMN_DEFINITION)
+	@Column(name = EntityConstants.NAME, nullable = false, columnDefinition = EntityConstants.DEVICE_INFO_NAME_COLUMN_DEFINITION)
 	private String name;
 	
 	@Column(name = EntityConstants.DEVICE_INFO_NICKNAME, nullable = true, columnDefinition = EntityConstants.DEVICE_INFO_NICKNAME_COLUMN_DEFINITION)
@@ -64,7 +64,7 @@ public class DeviceInfo extends BaseEntity {
 	private Date lastLinkTime;
 	
 	@Column(name = EntityConstants.DEVICE_INFO_ONLINE_STATUS, nullable = false, columnDefinition = EntityConstants.DEVICE_INFO_ONLINE_STATUS_COLUMN_DEFINITION)
-	private String onlineStatus;
+	private Integer onlineStatus;
 	
 	@Column(name = EntityConstants.DEVICE_INFO_LONGITUDE, nullable = true, columnDefinition = EntityConstants.DEVICE_INFO_LONGITUDE_COLUMN_DEFINITION)
 	private String longitude;
@@ -93,14 +93,8 @@ public class DeviceInfo extends BaseEntity {
 	@Column(name = EntityConstants.DEVICE_INFO_THIRD_PLATFORM_ID, nullable = true, columnDefinition = EntityConstants.DEVICE_INFO_THIRD_PLATFORM_ID_COLUMN_DEFINITION)
 	private Long thirdPlatformId;
 	
-	@Column(name = EntityConstants.CUSTOMER_ID, nullable = true, columnDefinition = EntityConstants.CUSTOMER_ID_COLUMN_DEFINITION)
-	private Long customerId;
-	
 	@Column(name = EntityConstants.TENANT_ID, nullable = true, columnDefinition = EntityConstants.TENANT_ID_COLUMN_DEFINITION)
 	private Long tenantId;
-	
-	@Column(name = EntityConstants.PROJECT_ID, nullable = true, columnDefinition = EntityConstants.PROJECT_ID_COLUMN_DEFINITION)
-	private Long projectId;
 	
 	@Column(name = EntityConstants.ACTIVATION_TIME, nullable = true, columnDefinition = EntityConstants.ACTIVATION_TIME_COLUMN_DEFINITION)
 	private Date activationTime;
@@ -108,7 +102,7 @@ public class DeviceInfo extends BaseEntity {
 	@Column(name = EntityConstants.ENABLE_FLAG, nullable = false, columnDefinition = EntityConstants.ENABLE_FLAG_COLUMN_DEFINITION)
 	private Boolean enableFlag;
 	
-	@Column(name = EntityConstants.ACTIVATION_TIME, nullable = true, columnDefinition = EntityConstants.ACTIVATION_TIME_COLUMN_DEFINITION)
+	@Column(name = EntityConstants.DEVICE_INFO_LASTED_UPGRADE_TIME, nullable = true, columnDefinition = EntityConstants.DEVICE_INFO_LASTED_UPGRADE_TIME_COLUMN_DEFINITION)
 	private Date lastedUpgradeTime;
 	
 	@Column(name = EntityConstants.DEVICE_INFO_FIRMWARE_UPGRADE_QUANTITY, nullable = true, columnDefinition = EntityConstants.DEVICE_INFO_FIRMWARE_UPGRADE_QUANTITY_COLUMN_DEFINITION)
