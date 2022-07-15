@@ -13,18 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.beidouiot.alllink.community.common.base.exception.CanNotDeleteDataException;
 import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.base.utils.Constants;
 import com.beidouiot.alllink.community.common.data.entity.user.center.Park;
-import com.beidouiot.alllink.community.common.data.entity.user.center.User;
 import com.beidouiot.alllink.community.common.data.mapping.user.center.park.ParkDtoMapping;
 import com.beidouiot.alllink.community.common.data.mapping.user.center.park.ParkUpdateDtoMapping;
 import com.beidouiot.alllink.community.common.data.xxo.rro.datasearch.SortRpo;
 import com.beidouiot.alllink.community.common.data.xxo.user.center.dto.ParkDto;
 import com.beidouiot.alllink.community.common.data.xxo.user.center.dto.ParkUpdateDto;
 import com.beidouiot.alllink.community.user.center.dao.repository.ParkRepository;
-import com.beidouiot.alllink.community.user.center.dao.repository.UserRepository;
 import com.beidouiot.alllink.community.user.center.dao.service.api.ParkService;
 
 /**
@@ -46,17 +43,13 @@ public class ParkServiceImpl implements ParkService {
 	@Autowired
 	private ParkRepository parkRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
 	public void saveEntity(@Valid ParkDto parkDto) throws ServiceException {
 		LOGGER.debug("parkDto = [ {} ]", parkDto);
 		Park park = parkDtoMapping.targetToSource(parkDto);
 		Map<String, Object> map = getHeaderUser();
-		Long userId = Long.valueOf(map.get("id").toString());
-		User user = userRepository.findById(userId).get();
-		park.setTenantId(user.getTenantId());
-		park.setCustomerId(user.getCustomerId());
+		String strTenantId = map.get("tenantId").toString();
+		Long tenantId = strTenantId == null || strTenantId.equals("") ? null : Long.valueOf(strTenantId);
+		park.setTenantId(tenantId);
 		parkRepository.save(park);
 	}
 
@@ -65,10 +58,7 @@ public class ParkServiceImpl implements ParkService {
 		if ( optional == null ) {
 			throw new IllegalArgumentException("id不存在");
 		}
-		List<User> users = userRepository.findByParkId(id);
-		if ( null != users && users.size() > 0 ) {
-			throw new CanNotDeleteDataException("园区/小区已使用，不能删除");
-		}
+		
 		parkRepository.deleteById(id);
 	}
 
@@ -76,10 +66,6 @@ public class ParkServiceImpl implements ParkService {
 		Optional<Park> optional = parkRepository.findById(id);
 		if ( optional == null ) {
 			throw new IllegalArgumentException("id不存在");
-		}
-		List<User> users = userRepository.findByParkId(id);
-		if ( null != users && users.size() > 0 ) {
-			throw new CanNotDeleteDataException("园区/小区已使用，不能删除");
 		}
 
 		Park park = optional.get();

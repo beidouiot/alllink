@@ -25,7 +25,6 @@ import com.beidouiot.alllink.community.common.data.entity.user.center.RoleMenu;
 import com.beidouiot.alllink.community.common.data.entity.user.center.RoleMenuKey;
 import com.beidouiot.alllink.community.common.data.entity.user.center.RoleUser;
 import com.beidouiot.alllink.community.common.data.entity.user.center.RoleUserKey;
-import com.beidouiot.alllink.community.common.data.entity.user.center.User;
 import com.beidouiot.alllink.community.common.data.mapping.user.center.role.RoleDtoMapping;
 import com.beidouiot.alllink.community.common.data.mapping.user.center.role.RoleUpdateDtoMapping;
 import com.beidouiot.alllink.community.common.data.xxo.rro.datasearch.SortRpo;
@@ -37,7 +36,6 @@ import com.beidouiot.alllink.community.user.center.dao.repository.MenuRepository
 import com.beidouiot.alllink.community.user.center.dao.repository.RoleMenuRepository;
 import com.beidouiot.alllink.community.user.center.dao.repository.RoleRepository;
 import com.beidouiot.alllink.community.user.center.dao.repository.RoleUserRepository;
-import com.beidouiot.alllink.community.user.center.dao.repository.UserRepository;
 import com.beidouiot.alllink.community.user.center.dao.service.api.RoleService;
 
 /**
@@ -61,9 +59,6 @@ public class RoleServiceImpl implements RoleService {
 	private RoleRepository roleRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
 	private RoleUserRepository roleUserRepository;
 	
 	@Autowired
@@ -83,16 +78,11 @@ public class RoleServiceImpl implements RoleService {
 		}
 		Role role = roleDtoMapping.targetToSource(roleDto);
 		Map<String, Object> map = getHeaderUser();
-		Long userId = Long.valueOf(map.get("id").toString());
-		User user = userRepository.findById(userId).get();
-		Long tenantId = user.getTenantId();
-		Long customerId = user.getCustomerId();
-		role.setCustomerId(customerId);
+		String strTenantId = map.get("tenantId").toString();
+		Long tenantId = strTenantId == null || strTenantId.equals("") ? null : Long.valueOf(strTenantId);
 		role.setTenantId(tenantId);
 		String code = "";
-		if( customerId != null ) {
-			code = customerId.toString()+"-"+RandomStringUtils.randomAlphanumeric(6);
-		} else if( tenantId != null) {
+		if( tenantId != null) {
 			code = tenantId.toString()+"-"+RandomStringUtils.randomAlphanumeric(6);
 		} else {
 			code = "-"+RandomStringUtils.randomAlphanumeric(6);
