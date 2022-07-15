@@ -11,6 +11,7 @@
   <packaging>pom</packaging>
   <name>data-mapping</name>
   <description>对象转换赋值</description>
+
   <modules>
   	<module>user-center-mapping</module>
   	<module>base-mapping</module>
