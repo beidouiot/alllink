@@ -63,6 +63,4 @@ public class CustomerUpdateRpo implements Serializable {
 	@CheckNumber(message = "id必须为正整数")
 	private Long tenantId;
 	
-	@ApiModelProperty(value = "系统编号", dataType = "String", required = false)
-	private String systemCode;
 }

@@ -103,13 +103,4 @@ public class UserAddRpo implements Serializable {
 	@ApiModelProperty(value = "所属租户（租户ID）", dataType = "Long", required = false)
 	private Long tenantId;
 	
-	@ApiModelProperty(value = "所属客户（客户ID）", dataType = "Long", required = false)
-	private Long customerId;
-	
-	@ApiModelProperty(value = "所属园区/小区（园区/小区ID）", dataType = "Long", required = false)
-	private Long parkId;
-	
-	@ApiModelProperty(value = "所属系统编号", dataType = "String", required = false)
-	@Length(min=0, max=50, message="系统编号长度不能超过50个字符")
-	private String systemCode;
 }
