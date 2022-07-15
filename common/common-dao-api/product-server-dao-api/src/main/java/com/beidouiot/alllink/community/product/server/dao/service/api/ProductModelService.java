@@ -33,5 +33,12 @@ public interface ProductModelService extends BaseService<ProductModelDto, Produc
 	 */
 	ProductModelDto findProductModels(Long productId) throws ServiceException;
 	
+	/**
+	 * 查询发布的物模型
+	 * @param productId
+	 * @return
+	 * @throws ServiceException
+	 */
+	public ProductModelDto findPubProductModels(Long productId) throws ServiceException;
 	
 }
