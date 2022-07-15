@@ -28,6 +28,8 @@ public class JwtTokenEnhancer implements TokenEnhancer {
         //把用户ID及用户姓名设置到JWT中
         info.put("id", user.getId());
         info.put("name", user.getName());
+        
+        info.put("tenantId", user.getTenantId() == null ? "" : user.getTenantId());
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
         return accessToken;
     }
