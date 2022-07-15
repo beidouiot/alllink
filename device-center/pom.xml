@@ -14,5 +14,6 @@
 
   <modules>
     <module>product-server</module>
+    <module>device-server</module>
   </modules>
 </project>
