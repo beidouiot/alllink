@@ -27,5 +27,8 @@ public class DeviceInfoSearchRpo extends SearchBaseRpo {
 	
 	@ApiModelProperty(value = "设备SN号", dataType = "String", required = false)
 	private String deviceSn;
+	
+	@ApiModelProperty(value = "设备在线状态", dataType = "Integer", required = false)
+	private Integer onlineStatus;
 
 }
