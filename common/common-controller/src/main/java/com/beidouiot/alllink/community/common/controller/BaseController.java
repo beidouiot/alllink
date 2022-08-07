@@ -239,8 +239,10 @@ public abstract class BaseController {
 		setUpdatedBy.invoke(obj, userJsonObject.getString("username"));
 		
         if (isAdd) {
+        	Field field1 = obj.getClass().getDeclaredField("createdBy");
+            paramsTypes[0] = field1.getType();
         	Method  setCreatedBy = obj.getClass().getMethod("setCreatedBy",
-    				new Class[0]);
+        			paramsTypes);
         	setCreatedBy.invoke(obj, userJsonObject.getString("username"));
         }
 	}
