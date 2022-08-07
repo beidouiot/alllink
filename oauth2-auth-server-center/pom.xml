@@ -10,14 +10,6 @@
   <description>oauth2认证服务中心</description>
   
     <dependencies>
-<!-- 		<dependency>
-		  <groupId>com.beidouiot.alllink.community.common.data.entity</groupId>
-		  <artifactId>base-entity</artifactId>
-		</dependency> -->
-<!-- 		<dependency>
-		  <groupId>com.beidouiot.alllink.community.common.data.xxo</groupId>
-		  <artifactId>base-xxo</artifactId>
-		</dependency> -->
 		<dependency>
 		  <groupId>com.beidouiot.alllink.community.dao</groupId>
 		  <artifactId>user-center-dao</artifactId>
