@@ -44,7 +44,9 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerRepository customerRepository;
 
 	public void saveEntity(@Valid CustomerDto customerDto) throws ServiceException {
-		LOGGER.debug("customerDto = [ {} ]", customerDto);
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("customerDto = [ {} ]", customerDto);
+		}
 		Customer customer = customerDtoMapping.targetToSource(customerDto);
 		customerRepository.save(customer);
 	}
@@ -72,7 +74,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	public void updateEntity(CustomerUpdateDto customerUpdateDto) throws ServiceException {
-		LOGGER.debug("customerUpdateDto = [ {} ]", customerUpdateDto);
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("customerUpdateDto = [ {} ]", customerUpdateDto);
+		}
 		Optional<Customer> optional = customerRepository.findById(customerUpdateDto.getId());
 		if (optional == null) {
 			throw new IllegalArgumentException("id不存在");
