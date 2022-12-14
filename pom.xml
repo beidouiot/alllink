@@ -51,6 +51,7 @@
   	<elasticsearch.version>7.12.0</elasticsearch.version>
   	<mockito.version>3.9.0</mockito.version>
   	<hibernate-types-52.version>2.14.0</hibernate-types-52.version>
+  	<influxdb-client-java.version>3.1.0</influxdb-client-java.version>
   </properties>
   
   <modules>
@@ -336,6 +337,11 @@
 		    <groupId>com.vladmihalcea</groupId>
 		    <artifactId>hibernate-types-52</artifactId>
 		    <version>${hibernate-types-52.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.influxdb</groupId>
+		  <artifactId>influxdb-client-java</artifactId>
+		  <version>${influxdb-client-java.version}</version>
 		</dependency>
       </dependencies>
   </dependencyManagement>

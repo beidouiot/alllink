@@ -15,6 +15,7 @@ public class ServiceConstants {
 	public static final String USER_CENTER_SERVER = "user-center-server";
 	public static final String USER_CENTER_URI_BASE = "/uc/";
 	public static final String USER_URI_BASE = USER_CENTER_URI_BASE + "user/";
+	public static final String CLIENT_URI_BASE = USER_CENTER_URI_BASE + "client/";
 	public static final String ROLE_URI_BASE = USER_CENTER_URI_BASE + "role/";
 	public static final String TENANT_URI_BASE = USER_CENTER_URI_BASE + "tenant/";
 	public static final String MENU_URI_BASE = USER_CENTER_URI_BASE + "menu/";
