@@ -64,7 +64,10 @@ public class CustromerController extends BaseController {
 	@PostMapping("v1/add")
 	public ResponseEntity<ResultDataRro<Object>> add(
 			@RequestBody @ApiParam(name = "新增客户信息", value = "客户信息请求参数", required = true) @Valid CustomerAddRpo customerAddRpo) {
-		LOGGER.debug("customerAddRpo= [ {} ]", customerAddRpo);
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("customerAddRpo= [ {} ]", customerAddRpo);
+		}
+		
 		CustomerDto customerDto = custromerRpoDtoMapping.targetToSource(customerAddRpo);
 		addUsernameAndDate(customerDto,true);
 		customerService.saveEntity(customerDto);
@@ -76,7 +79,10 @@ public class CustromerController extends BaseController {
 	@PostMapping("v1/update")
 	public ResponseEntity<ResultDataRro<Object>> update(
 			@RequestBody @ApiParam(name = "修改客户信息", value = "客户信息请求参数", required = true) @Valid CustomerUpdateRpo customerUpdateRpo) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-		LOGGER.debug("customerUpdateRpo= [ {} ]", customerUpdateRpo);
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("customerUpdateRpo= [ {} ]", customerUpdateRpo);
+		}
+		
 		CustomerUpdateDto customerUpdateDto = customerUpdateRpoToCustomerUpdateDtoMapping.targetToSource(customerUpdateRpo);
 		addUsername(customerUpdateDto, false);
 		customerService.updateEntity(customerUpdateDto);
@@ -87,7 +93,10 @@ public class CustromerController extends BaseController {
 	@DeleteMapping("v1/logicalDelete")
 	public ResponseEntity<?> logicalDelete(
 			@RequestBody @ApiParam(name = "删除客户", value = "删除客户信息请求参数", required = true) @Valid ID id) {
-		LOGGER.debug("id= {}", id);
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("id= {}", id);
+		}
+		
 		customerService.logicalDelete(id.getId());
 		return makeSuccessResponseEntity(null, HttpStatus.OK);
 	}
@@ -96,7 +105,10 @@ public class CustromerController extends BaseController {
 	@DeleteMapping("v1/realDelete")
 	public ResponseEntity<?> realDelete(
 			@RequestBody @ApiParam(name = "删除客户", value = "删除客户信息请求参数", required = true) @Valid ID id) {
-		LOGGER.debug("id= {}", id);
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("id= {}", id);
+		}
+		
 		customerService.delete(id.getId());
 		return makeSuccessResponseEntity(null, HttpStatus.OK);
 	}
@@ -105,7 +117,10 @@ public class CustromerController extends BaseController {
 	@PostMapping("v1/findOne")
 	public ResponseEntity<?> findONe(
 			@RequestBody @ApiParam(name = "查询客户", value = "根据id查询客户信息请求参数", required = true) @Valid ID id) {
-		LOGGER.debug("id= {}", id);
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("id= {}", id);
+		}
+		
 		CustomerDto customeDto = customerService.findById(id.getId());
 		return makeSuccessResponseEntity(customeDto, HttpStatus.OK);
 	}
