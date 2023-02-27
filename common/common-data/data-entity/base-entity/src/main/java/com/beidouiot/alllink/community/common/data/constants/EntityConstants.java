@@ -111,6 +111,14 @@ public class EntityConstants {
 	public static final String PRODUCT_COMMAND_MODEL_ID_COLUMN_DEFINITION = "bigint comment '产品指令模型id'";
 	public static final String DEVICE_ID = "device_id";
 	public static final String DEVICE_ID_COLUMN_DEFINITION = "bigint comment '设备id'";
+	public static final String MODEL_CODE = "model_code";
+	public static final String MODEL_CODE_COLUMN_DEFINITION = "varchar(50) comment '模型标识代码'";
+	public static final String MODEL_VALUE = "model_value";
+	public static final String MODEL_VALUE_COLUMN_DEFINITION = "varchar(100) comment '模型标识值'";
+	public static final String COLLECT_TIME = "collect_time";
+	public static final String COLLECT_TIME_COLUMN_DEFINITION = "varchar(50) comment '数据采集时间'";
+	public static final String MODEL_TYPE = "model_type";
+	public static final String MODEL_TYPE_COLUMN_DEFINITION = "int comment '物模型类型，1属性模型，2事件，3指令'";
 	
 	/**
 	 * 行业信息表
@@ -441,4 +449,6 @@ public class EntityConstants {
 	public static final String DEVICE_NEW_DATA_MODEL_TYPE_COLUMN_DEFINITION = "int comment '物模型类型(属性模型：1，事件模型：2，指令模型：3)'";
 	public static final String DEVICE_NEW_DATA_RECEIVED_DATA = "received_data";
 	public static final String DEVICE_NEW_DATA_RECEIVED_DATA_COLUMN_DEFINITION = "varchar(2000) comment '物模型数据'";
+	
+	public static final String DEVICE_DATA = "device_data";
 }
