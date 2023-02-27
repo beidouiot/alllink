@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.beidouiot.alllink.community.common.base.enums.DeviceOnlineStatus;
 import com.beidouiot.alllink.community.common.base.exception.ServiceException;
@@ -20,6 +21,7 @@ import com.beidouiot.alllink.community.common.data.mapping.DeviceInfoUpdateDtoMa
 import com.beidouiot.alllink.community.common.data.xxo.device.dto.DeviceInfoDto;
 import com.beidouiot.alllink.community.common.data.xxo.device.dto.DeviceInfoUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.rro.datasearch.SortRpo;
+import com.beidouiot.alllink.community.device.dao.service.api.DeviceDataService;
 import com.beidouiot.alllink.community.device.dao.service.api.DeviceInfoService;
 import com.beidouiot.alllink.community.device.service.dao.repository.DeviceInfoRepository;
 
@@ -36,8 +38,12 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 
 	@Autowired
 	private DeviceInfoRepository deviceInfoRepository;
+	
+	@Autowired
+	private DeviceDataService deviceDataService;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void saveEntity(DeviceInfoDto deviceInfoDto) throws ServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("deviceInfoDto = [ {} ]", deviceInfoDto);
@@ -50,6 +56,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		deviceInfo.setOnlineStatus(DeviceOnlineStatus.UNACTIVATION.getCode());
 		deviceInfo.setTenantId(tenantId);
 		deviceInfoRepository.save(deviceInfo);
+		deviceDataService.saveDeviceSNTableStructure(deviceInfoDto.getDeviceSn());
 	}
 
 	@Override
