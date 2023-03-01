@@ -15,5 +15,6 @@
 <!--   	<module>oauth2-feign</module> -->
   	<module>user-feign</module>
     <module>product-feign</module>
+    <module>device-feign</module>
   </modules>
 </project>

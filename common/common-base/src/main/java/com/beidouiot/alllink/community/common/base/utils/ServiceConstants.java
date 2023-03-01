@@ -44,8 +44,13 @@ public class ServiceConstants {
 	public static final String PRODUCT_COMMAND_MODEL_URI_BASE = PRODUCT_CENTER_URI_BASE + "product/cm/";
 	public static final String PRODUCT_COMMAND_MODEL_PARAM_URI_BASE = PRODUCT_CENTER_URI_BASE + "product/cmp/";
 	public static final String PRODUCT_MODEL_URI_BASE = PRODUCT_CENTER_URI_BASE + "product/model/";
+	
+	
+	public static final String DEVICE_CENTER_SERVER = "device-center-server";
 	public static final String DEVICE_SERVER_URI_BASE = "/ds/";
 	public static final String DEVICE_INFO_URI_BASE = DEVICE_SERVER_URI_BASE + "deviceInfo/";
 	public static final String DEVICE_NEW_DATA_URI_BASE = DEVICE_SERVER_URI_BASE + "deviceNewData/";
+	public static final String DEVICE_DATA_URI_BASE = DEVICE_SERVER_URI_BASE + "deviceData/";
+	
 	
 }

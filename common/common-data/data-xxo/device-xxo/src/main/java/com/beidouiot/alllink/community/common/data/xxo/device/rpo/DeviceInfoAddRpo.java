@@ -62,7 +62,7 @@ public class DeviceInfoAddRpo implements Serializable {
 	@ApiModelProperty(value = "备注", dataType = "String", required = false)
 	private String remark;
 	
-	@ApiModelProperty(value = "设备接入类型", dataType = "String", required = false)
+	@ApiModelProperty(value = "设备接入类型", dataType = "String", required = true)
 	private String deviceAccessType;
 	
 	@ApiModelProperty(value = "所属网关Id", dataType = "String", required = false)

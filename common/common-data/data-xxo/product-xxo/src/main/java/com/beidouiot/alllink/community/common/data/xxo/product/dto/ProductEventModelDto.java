@@ -47,7 +47,7 @@ public class ProductEventModelDto extends BaseDto {
 		strId = id == null || id == 0 ? "" : String.valueOf(id);
 		return strId;
 	}
-	
+	 
 	private String strProductId;
 	
 	public String getStrProductId() {
