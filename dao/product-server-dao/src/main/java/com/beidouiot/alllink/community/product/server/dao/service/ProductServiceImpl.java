@@ -209,4 +209,13 @@ public class ProductServiceImpl implements ProductService {
 		return findPage(searchParams, pageNumber, pageSize, sortTypes, productRepository, productDtoMapping);
 	}
 
+	@Override
+	public ProductDto findByName(String name) throws ServiceException {
+		Product product = productRepository.findByNameAndDeleteFlag(name, Boolean.FALSE);
+		if (product == null) {
+			return null;
+		}
+		return productDtoMapping.sourceToTarget(product);
+	}
+
 }

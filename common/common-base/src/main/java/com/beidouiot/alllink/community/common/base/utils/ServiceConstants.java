@@ -52,5 +52,8 @@ public class ServiceConstants {
 	public static final String DEVICE_NEW_DATA_URI_BASE = DEVICE_SERVER_URI_BASE + "deviceNewData/";
 	public static final String DEVICE_DATA_URI_BASE = DEVICE_SERVER_URI_BASE + "deviceData/";
 	
+	public static final String MQTT_SERVER = "mqtt-server";
+	public static final String MQTT_URI_BASE = "/mqtt/";
+	public static final String MQTT_PUBLISH_URI_BASE = MQTT_URI_BASE + "publish/";
 	
 }

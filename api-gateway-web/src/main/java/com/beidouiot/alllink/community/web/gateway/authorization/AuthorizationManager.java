@@ -1,6 +1,9 @@
 package com.beidouiot.alllink.community.web.gateway.authorization;
 
-import cn.hutool.core.convert.Convert;
+import java.net.URI;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,12 +20,8 @@ import com.beidouiot.alllink.community.common.base.utils.CacheKeyConstants;
 import com.beidouiot.alllink.community.common.base.utils.Constants;
 import com.beidouiot.alllink.community.common.utils.AlllinkStringUtils;
 
+import cn.hutool.core.convert.Convert;
 import reactor.core.publisher.Mono;
-
-import java.net.URI;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 
@@ -58,13 +57,24 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 		List<String> authorities = Convert.toList(String.class, obj);
 		authorities = authorities.stream().map(i -> i = Constants.AUTHORITY_PREFIX + i).collect(Collectors.toList());
 		// 认证通过且角色匹配的用户可访问当前路径
+		
+		final boolean hasPermission = !authorities.isEmpty();
+		
+//        return mono.map(auth -> {
+//            return new AuthorizationDecision(hasPermission);
+//        }).defaultIfEmpty(new AuthorizationDecision(false));
+       
+        
 		return mono
-				.filter(Authentication::isAuthenticated)
-				.flatMapIterable(Authentication::getAuthorities)
-				.map(GrantedAuthority::getAuthority)
-				.any(authorities::contains)
-				.map(AuthorizationDecision::new)
-				.defaultIfEmpty(new AuthorizationDecision(false));
+		.filter(Authentication::isAuthenticated)
+		.flatMapIterable(Authentication::getAuthorities)
+		.map(GrantedAuthority::getAuthority)
+		.any(authorities::contains)
+		.map(o -> {
+			return new AuthorizationDecision(hasPermission);
+		})
+		.defaultIfEmpty(new AuthorizationDecision(false));
+        
 	}
 
 }

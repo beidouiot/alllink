@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.base.utils.ServiceConstants;
 import com.beidouiot.alllink.community.common.controller.BaseController;
 import com.beidouiot.alllink.community.common.dao.api.service.datasercher.SearchParamsUtils;
@@ -136,6 +138,21 @@ public class ProductController extends BaseController {
 			LOGGER.debug("id= {}", id);
 		}
 		ProductDto productDto = productService.findById(id.getId());
+		return makeSuccessResponseEntity(productDto, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "查询产品", notes = "根据id查询产品")
+	@PostMapping("v1/find/name")
+	public ResponseEntity<?> findByName(
+			@RequestBody @ApiParam(name = "产品名称", value = "产品 ", required = true) ProductSearchRpo productSearchRpo) {
+		if ( LOGGER.isDebugEnabled() ) {
+			LOGGER.debug("productName= {}", productSearchRpo.getName());
+		}
+		if (StringUtils.isBlank(productSearchRpo.getName())) {
+			throw new ServiceException("名称不能为空！");
+		}
+		ProductDto productDto = productService.findByName(productSearchRpo.getName());
+		
 		return makeSuccessResponseEntity(productDto, HttpStatus.OK);
 	}
 	

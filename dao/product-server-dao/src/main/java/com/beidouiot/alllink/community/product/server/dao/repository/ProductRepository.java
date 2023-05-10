@@ -17,4 +17,6 @@ import com.beidouiot.alllink.community.common.data.entity.product.Product;
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
 	List<Product> findByDeleteFlag(Boolean deleteFlag);
+	
+	Product findByNameAndDeleteFlag(String name, Boolean deleteFlag);
 }

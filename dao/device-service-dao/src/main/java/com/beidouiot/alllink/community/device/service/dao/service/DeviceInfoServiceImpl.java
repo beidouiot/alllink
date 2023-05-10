@@ -12,18 +12,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.beidouiot.alllink.community.common.base.enums.DeviceOnlineStatus;
 import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.base.utils.Constants;
 import com.beidouiot.alllink.community.common.data.entity.device.DeviceInfo;
 import com.beidouiot.alllink.community.common.data.mapping.DeviceInfoDtoMapping;
 import com.beidouiot.alllink.community.common.data.mapping.DeviceInfoUpdateDtoMapping;
+import com.beidouiot.alllink.community.common.data.xxo.device.dto.DeviceCommandsDto;
 import com.beidouiot.alllink.community.common.data.xxo.device.dto.DeviceInfoDto;
 import com.beidouiot.alllink.community.common.data.xxo.device.dto.DeviceInfoUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.rro.datasearch.SortRpo;
 import com.beidouiot.alllink.community.device.dao.service.api.DeviceDataService;
 import com.beidouiot.alllink.community.device.dao.service.api.DeviceInfoService;
 import com.beidouiot.alllink.community.device.service.dao.repository.DeviceInfoRepository;
+import com.beidouiot.alllink.community.feign.mqtt.PublishFeignClient;
 
 @Service
 public class DeviceInfoServiceImpl implements DeviceInfoService {
@@ -41,6 +44,9 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 	
 	@Autowired
 	private DeviceDataService deviceDataService;
+	
+	@Autowired
+	private PublishFeignClient publishFeignClient;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -157,5 +163,55 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 			}
 		}
 	}
+	
+	@Override
+	public void sendProperties(DeviceCommandsDto deviceCommandsDto) throws ServiceException {
+		JSONObject json = new JSONObject();
+		json.put("topic", deviceCommandsDto.getProductName()+"/"+deviceCommandsDto.getDeviceName()+"/properties/down");
+		
+		JSONObject message = new JSONObject();
+		message.put("productName", deviceCommandsDto.getProductName());
+		message.put("deviceName", deviceCommandsDto.getDeviceName());
+		message.put("sn", deviceCommandsDto.getSn());
+		message.put("code", deviceCommandsDto.getCode());
+		message.put("value", deviceCommandsDto.getValue());
+		
+		json.put("message", message);
+		publishFeignClient.publish(json);
+	}
+
+	@Override
+	public void sendEvents(DeviceCommandsDto deviceCommandsDto) throws ServiceException {
+		JSONObject json = new JSONObject();
+		json.put("topic", deviceCommandsDto.getProductName()+"/"+deviceCommandsDto.getDeviceName()+"/events/down");
+		
+		JSONObject message = new JSONObject();
+		message.put("productName", deviceCommandsDto.getProductName());
+		message.put("deviceName", deviceCommandsDto.getDeviceName());
+		message.put("sn", deviceCommandsDto.getSn());
+		message.put("code", deviceCommandsDto.getCode());
+		message.put("value", deviceCommandsDto.getValue());
+		
+		json.put("message", message);
+		publishFeignClient.publish(json);
+	}
+	
+	@Override
+	public void sendCommands(DeviceCommandsDto deviceCommandsDto) throws ServiceException {
+		JSONObject json = new JSONObject();
+		json.put("topic", deviceCommandsDto.getProductName()+"/"+deviceCommandsDto.getDeviceName()+"/commonds/down");
+		
+		JSONObject message = new JSONObject();
+		message.put("productName", deviceCommandsDto.getProductName());
+		message.put("deviceName", deviceCommandsDto.getDeviceName());
+		message.put("sn", deviceCommandsDto.getSn());
+		message.put("code", deviceCommandsDto.getCode());
+		message.put("value", deviceCommandsDto.getValue());
+		
+		json.put("message", message);
+		publishFeignClient.publish(json);
+	}
+	
+
 
 }

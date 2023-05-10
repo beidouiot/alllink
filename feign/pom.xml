@@ -16,5 +16,6 @@
   	<module>user-feign</module>
     <module>product-feign</module>
     <module>device-feign</module>
+    <module>device-mqtt-feign</module>
   </modules>
 </project>

@@ -1,5 +1,6 @@
 package com.beidouiot.alllink.community.product.server.dao.service.api;
 
+import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.dao.api.service.BaseService;
 import com.beidouiot.alllink.community.common.data.entity.product.Product;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductDto;
@@ -13,4 +14,11 @@ import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductUpdate
 */
 public interface ProductService extends BaseService<ProductDto, ProductUpdateDto, Product, Long> {
 
+	/**
+	 * 	根据产品名称查询产品
+	 * @param name
+	 * @return
+	 * @throws ServiceException
+	 */
+	ProductDto findByName(String name) throws ServiceException;
 }

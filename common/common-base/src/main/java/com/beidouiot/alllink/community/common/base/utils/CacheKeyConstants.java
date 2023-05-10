@@ -12,7 +12,7 @@ public class CacheKeyConstants {
 	/**
 	 * 手机短信验证码缓存
 	 */
-	public static final String MOBILE_SMS_CODE_CACHE_PREFIX = "mobileSmsCodeCache:userCenter:user:smsCode";
+	public static final String MOBILE_SMS_CODE_CACHE_PREFIX = "mobile_sms_code_cache:user_center:user:sms_code";
 	
 	public static final String RESOURCE_ROLES_MAP = "AUTH:RESOURCE_ROLES_MAP";
 	

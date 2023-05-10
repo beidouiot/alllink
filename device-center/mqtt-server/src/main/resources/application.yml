@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: mqtt-server
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        
+server:
+  port: 10010
+
+

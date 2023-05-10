@@ -20,4 +20,6 @@ public interface DeviceNewDataRepository extends PagingAndSortingRepository<Devi
 	
 	List<DeviceNewData> findByDeviceIdAndDeleteFlag(Long deviceId, Boolean deleteFlag);
 	
+	List<DeviceNewData> findByDeviceIdAndModelCodeAndModelTypeAndDeleteFlag(Long deviceId, String modelCode, Integer modelType, Boolean deleteFlag);
+	
 }

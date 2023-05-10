@@ -1,14 +1,17 @@
 package com.beidouiot.alllink.community.oauth2.server.config;
 
-import com.beidouiot.alllink.community.oauth2.server.component.JwtTokenEnhancer;
-import com.beidouiot.alllink.community.oauth2.server.granter.ResourceOwnerSmsTokenGranter;
-import com.beidouiot.alllink.community.user.center.dao.service.api.UserService;
+import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,11 +39,9 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
-import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
+import com.beidouiot.alllink.community.oauth2.server.component.JwtTokenEnhancer;
+import com.beidouiot.alllink.community.oauth2.server.granter.ResourceOwnerSmsTokenGranter;
+import com.beidouiot.alllink.community.oauth2.server.service.UserService;
 
 /**
  * 
@@ -64,6 +65,9 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
       
     @Autowired
     private Environment env;  
+    
+    @Autowired
+	private RedisTemplate<String, Object> redisTemplate;
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -152,7 +156,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
             tokenGranters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager,
                     tokenServices, endpoints.getClientDetailsService(), requestFactory));
         }
-        tokenGranters.add(new ResourceOwnerSmsTokenGranter(userDetailsService, tokenServices,clientDetailsService, requestFactory));
+        tokenGranters.add(new ResourceOwnerSmsTokenGranter(userDetailsService, tokenServices,clientDetailsService, requestFactory,redisTemplate));
         
         return tokenGranters;
     }
