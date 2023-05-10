@@ -10,9 +10,17 @@
   <description>oauth2认证服务中心</description>
   
     <dependencies>
-		<dependency>
+<!-- 		<dependency>
 		  <groupId>com.beidouiot.alllink.community.dao</groupId>
 		  <artifactId>user-center-dao</artifactId>
+		</dependency> -->
+	<dependency>
+	  <groupId>com.beidouiot.alllink.community.common.data.entity</groupId>
+	  <artifactId>user-center-entity</artifactId>
+	</dependency>
+		<dependency>
+		  <groupId>com.beidouiot.alllink.community.feign</groupId>
+		  <artifactId>user-feign</artifactId>
 		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

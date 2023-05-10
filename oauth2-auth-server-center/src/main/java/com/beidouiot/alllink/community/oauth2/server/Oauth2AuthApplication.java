@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 
@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.beidouiot.alllink.community.common.data.entity.user.center")
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = { "com.beidouiot.alllink.community" })
-@EnableJpaRepositories(basePackages = { "com.beidouiot.alllink.community.user.center.dao.repository" })
+@EnableFeignClients(basePackages = {"com.beidouiot.alllink.community.**.feign"})
 public class Oauth2AuthApplication {
 
 	public static void main(String[] args) {

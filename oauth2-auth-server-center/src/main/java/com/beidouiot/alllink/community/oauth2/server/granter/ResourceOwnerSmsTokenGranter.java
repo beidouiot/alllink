@@ -2,7 +2,7 @@ package com.beidouiot.alllink.community.oauth2.server.granter;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
@@ -12,8 +12,8 @@ import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.base.utils.CacheKeyConstants;
 import com.beidouiot.alllink.community.common.base.utils.Constants;
 import com.beidouiot.alllink.community.common.data.entity.user.center.User;
-import com.beidouiot.alllink.community.common.utils.AlllinkStringUtils;
-import com.beidouiot.alllink.community.user.center.dao.service.api.UserService;
+import com.beidouiot.alllink.community.feign.user.UserFeignClient;
+import com.beidouiot.alllink.community.oauth2.server.service.UserService;
 
 /**
 *
@@ -25,13 +25,14 @@ public class ResourceOwnerSmsTokenGranter extends AbstractCustomTokenGranter {
 	
 	protected UserService userService;
 	
-	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 	
+	
 	public ResourceOwnerSmsTokenGranter(UserService userService, AuthorizationServerTokenServices tokenServices,
-			ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
+			ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory,RedisTemplate<String, Object> redisTemplate) {
 		super(tokenServices, clientDetailsService, requestFactory, "sms");
 		this.userService = userService;
+		this.redisTemplate = redisTemplate;
 	}
 	
 	@Override
@@ -51,20 +52,19 @@ public class ResourceOwnerSmsTokenGranter extends AbstractCustomTokenGranter {
 	 * @param smsCode
 	 */
 	private boolean verifySms(String mobile, String smsCode) {
-        if (AlllinkStringUtils.isBlank(mobile)) {
+        if (StringUtils.isBlank(mobile)) {
             throw new ServiceException("手机号不能为空");
         }
         
-        if (AlllinkStringUtils.isBlank(smsCode)) {
+        if (StringUtils.isBlank(smsCode)) {
             throw new ServiceException("验证码不能为空");
         }
-        
-       Object obj =  redisTemplate.opsForValue().get(CacheKeyConstants.MOBILE_SMS_CODE_CACHE_PREFIX+mobile);
+       Object obj =  redisTemplate.opsForHash().get(CacheKeyConstants.MOBILE_SMS_CODE_CACHE_PREFIX,mobile);
         if (obj == null) {
         	return false;
         }
        
-        if (!AlllinkStringUtils.equals(smsCode, obj.toString())) {
+        if (!StringUtils.equals(smsCode, obj.toString())) {
         	return false;
         }
         return true;

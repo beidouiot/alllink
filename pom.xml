@@ -52,6 +52,9 @@
   	<mockito.version>3.9.0</mockito.version>
   	<hibernate-types-52.version>2.14.0</hibernate-types-52.version>
   	<influxdb-client-java.version>3.1.0</influxdb-client-java.version>
+  	<paho.client.mqttv3.version>1.2.5</paho.client.mqttv3.version>
+  	<bcpkix-jdk15on.version>1.70</bcpkix-jdk15on.version>
+  	<pulsar-client.version>3.0.0</pulsar-client.version>
   </properties>
   
   <modules>
@@ -63,6 +66,7 @@
   	<module>user-center</module>
   	<module>multistep-chache</module>
     <module>device-center</module>
+    <module>data-collection-center</module>
   </modules>
   
   <dependencies>
@@ -227,6 +231,16 @@
 		  <artifactId>product-feign</artifactId>
 		  <version>${project.version}</version>
 		</dependency>
+	<dependency>
+		<groupId>com.beidouiot.alllink.community.feign</groupId>
+		<artifactId>device-feign</artifactId>
+		<version>${project.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.beidouiot.alllink.community.feign</groupId>
+	  <artifactId>device-mqtt-feign</artifactId>
+	  <version>${project.version}</version>
+	</dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
@@ -342,6 +356,21 @@
 		  <groupId>com.influxdb</groupId>
 		  <artifactId>influxdb-client-java</artifactId>
 		  <version>${influxdb-client-java.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>${paho.client.mqttv3.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.bouncycastle</groupId>
+		    <artifactId>bcpkix-jdk15on</artifactId>
+		    <version>${bcpkix-jdk15on.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.pulsar</groupId>
+		    <artifactId>pulsar-client</artifactId>
+		    <version>${pulsar-client.version}</version>
 		</dependency>
       </dependencies>
   </dependencyManagement>
