@@ -1,18 +1,22 @@
 package com.beidouiot.alllink.community.device.service.dao.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.beidouiot.alllink.community.common.base.exception.ServiceException;
 import com.beidouiot.alllink.community.common.base.utils.Constants;
 import com.beidouiot.alllink.community.common.data.entity.device.DeviceInfo;
@@ -23,15 +27,23 @@ import com.beidouiot.alllink.community.common.data.xxo.device.dto.DeviceNewDataD
 import com.beidouiot.alllink.community.common.data.xxo.device.dto.DeviceNewDataUpdateDto;
 import com.beidouiot.alllink.community.common.data.xxo.dto.ID;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductCommandModelDto;
+import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductEventModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductModelDto;
 import com.beidouiot.alllink.community.common.data.xxo.product.dto.ProductPropertyModelDto;
+import com.beidouiot.alllink.community.common.data.xxo.product.dto.StandardPropertyModelDto;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.product.ProductSearchRpo;
+import com.beidouiot.alllink.community.common.data.xxo.product.rpo.standardmodel.StandardPropertyModelSearchRpo;
 import com.beidouiot.alllink.community.common.data.xxo.rro.ResultDataRro;
+import com.beidouiot.alllink.community.common.data.xxo.rro.datasearch.SmartPage;
 import com.beidouiot.alllink.community.common.data.xxo.rro.datasearch.SortRpo;
+import com.beidouiot.alllink.community.device.dao.service.api.DeviceDataService;
 import com.beidouiot.alllink.community.device.dao.service.api.DeviceNewDataService;
 import com.beidouiot.alllink.community.device.service.dao.repository.DeviceInfoRepository;
 import com.beidouiot.alllink.community.device.service.dao.repository.DeviceNewDataRepository;
+import com.beidouiot.alllink.community.feign.product.ProductFeignClient;
 import com.beidouiot.alllink.community.feign.product.ProductModelFeignClient;
+import com.beidouiot.alllink.community.feign.product.StandardPropertyModelFeignClient;
 
 @Service
 public class DeviceNewDataServiceImpl implements DeviceNewDataService {
@@ -52,21 +64,34 @@ public class DeviceNewDataServiceImpl implements DeviceNewDataService {
 	
 	@Autowired
 	private DeviceInfoRepository deviceInfoRepository;
-
+	
 	@Override
+	@Transactional
 	public void saveEntity(DeviceNewDataDto deviceNewDataDto) throws ServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("deviceNewDataDto = [ {} ]", deviceNewDataDto);
 		}
 		
-		DeviceNewData deviceNewData = deviceNewDataDtoMapping.targetToSource(deviceNewDataDto);
-		Map<String,Object> map = getHeaderUser();
-		String strTenantId = map.get("tenantId").toString();
-		Long tenantId = strTenantId == null || strTenantId.equals("") ? null : Long.valueOf(strTenantId);
-		deviceNewData.setTentantId(tenantId);
-		
-		deviceNewDataRepository.save(deviceNewData);
-
+		List<DeviceNewData> existDeviceNewDatas = deviceNewDataRepository.findByDeviceIdAndModelCodeAndModelTypeAndDeleteFlag(deviceNewDataDto.getDeviceId(),deviceNewDataDto.getModelCode(),deviceNewDataDto.getModelType(),Constants.FALSE);
+		if ( existDeviceNewDatas == null || existDeviceNewDatas.size() == 0 ) {
+			DeviceNewData deviceNewData = deviceNewDataDtoMapping.targetToSource(deviceNewDataDto);
+			Optional<DeviceInfo> o = deviceInfoRepository.findById(deviceNewDataDto.getDeviceId());
+			if ( !o.isPresent() ) {
+				throw new ServiceException("设备Id不存在");
+			}
+			DeviceInfo deviceInfo = o.get();
+			deviceNewData.setProductId(deviceInfo.getProductId());
+//			Map<String,Object> map = getHeaderUser();
+//			String strTenantId = map.get("tenantId").toString();
+//			Long tenantId = strTenantId == null || strTenantId.equals("") ? null : Long.valueOf(strTenantId);
+			deviceNewData.setTentantId(deviceInfo.getTenantId());
+			deviceNewDataRepository.save(deviceNewData);
+		} else {
+			DeviceNewData deviceNewData = existDeviceNewDatas.get(0);
+			deviceNewData.setReceivedData(deviceNewDataDto.getReceivedData());
+			deviceNewData.setUpdatedDate(new Date());
+			deviceNewDataRepository.save(deviceNewData);
+		}
 	}
 
 	@Override
@@ -87,17 +112,31 @@ public class DeviceNewDataServiceImpl implements DeviceNewDataService {
 	}
 
 	@Override
+	@Transactional
 	public void updateEntity(DeviceNewDataUpdateDto deviceNewDataUpdateDto) throws ServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("deviceNewDataUpdateDto = [ {} ]", deviceNewDataUpdateDto);
 		}
-
-		Optional<DeviceNewData> optional = deviceNewDataRepository.findById(deviceNewDataUpdateDto.getId());
-
-		DeviceNewData deviceNewData = optional.get();
-		deviceNewData = deviceNewDataUpdateDtoMapping.targetToSourceForUpdate(deviceNewDataUpdateDto, deviceNewData);
-		deviceNewDataRepository.save(deviceNewData);
-
+		
+		if ( deviceNewDataUpdateDto.getId() == null | deviceNewDataUpdateDto.getId() == 0) {
+			if ( deviceNewDataUpdateDto.getDeviceId() == null || deviceNewDataUpdateDto.getDeviceId() == 0 ) {
+				throw new ServiceException("设备Id不能为空！");
+			}
+			List<DeviceNewData> list = deviceNewDataRepository.findByDeviceIdAndModelCodeAndModelTypeAndDeleteFlag(deviceNewDataUpdateDto.getDeviceId(),deviceNewDataUpdateDto.getModelCode(),deviceNewDataUpdateDto.getModelType(),Constants.FALSE);
+			if ( list == null || list.size() == 0 ) {
+				throw new ServiceException("没有该设备数据！");
+			}
+			DeviceNewData deviceNewData = list.get(0);
+			deviceNewData = deviceNewDataUpdateDtoMapping.targetToSourceForUpdate(deviceNewDataUpdateDto, deviceNewData);
+			deviceNewData.setUpdatedDate(new Date());
+			deviceNewDataRepository.save(deviceNewData);
+		} else {
+			Optional<DeviceNewData> optional = deviceNewDataRepository.findById(deviceNewDataUpdateDto.getId());
+			DeviceNewData deviceNewData = optional.get();
+			deviceNewData = deviceNewDataUpdateDtoMapping.targetToSourceForUpdate(deviceNewDataUpdateDto, deviceNewData);
+			deviceNewData.setUpdatedDate(new Date());
+			deviceNewDataRepository.save(deviceNewData);
+		}
 	}
 
 	@Override

@@ -32,5 +32,7 @@ public interface DeviceInfoRepository extends PagingAndSortingRepository<DeviceI
 	
 	List<DeviceInfo> findByTenantIdAndDeleteFlagAndGatewayFlagAndEnableFlag(Long tenantId, Boolean deleteFlag, Boolean gatewayFlag, Boolean enableFlag);
 	
+	List<DeviceInfo> findByNameAndDeviceSnAndDeleteFlagAndEnableFlag(String name, String deviceSn, Boolean deleteFlag, Boolean enableFlag);
+	
 	List<DeviceInfo> findByDeviceSnAndDeleteFlagAndEnableFlag(String deviceSn, Boolean deleteFlag, Boolean enableFlag);
 }
