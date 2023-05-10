@@ -113,7 +113,7 @@ public interface BaseService<D,U, E, ID> {
 		Page<D> pageDto = new PageImpl<D>(list, page.getPageable(), page.getTotalElements());
 		return pageDto;
 	}
-
+	
 	default JSONObject getHeaderUser() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
