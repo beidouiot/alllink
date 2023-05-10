@@ -1,0 +1,79 @@
+    
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #sentinel控制台服务端地址
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+    
+  redis: #redis配置
+    host: localhost
+    port: 6379
+    password:
+    database: 2
+    lettuce:
+      pool:
+        max-active: 10
+        max-wait: 3000ms
+        max-idle: 10
+        min-idle: 0
+    timeout: 6000ms
+
+  datasource: #数据库配置
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/iot_device_center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        username: root
+        password: 123456
+        minimum-idle: 10
+        maximum-pool-size: 50
+        auto-commit: true
+        idle-timeout: 30000
+        pool-name: DatebookHikariCP
+        max-lifetime: 1800000
+        connection-timeout: 30000
+        connection-test-query: SELECT 1
+  
+  jpa:
+    show-sql: true
+    hibernate: #(create, create-drop, update)
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+        session_factory:
+          session_scoped_interceptor: com.beidouiot.alllink.community.device.service.dao.repository.interceptor.JPAInterceptor
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+
+influx:
+  url: http://localhost:8086
+  token: qRN2ODXbrQvrW1-ra3aI-IJm4bWyOBZmbPI5SdOeDAjqSNOjYRo-8HfphVNOhaxMZbcad52gvEP43yYy7en5VQ==
+  bucket: beidouiot
+  org: beidouiot
+  
+device:
+  collection:
+    data:
+      storage: mysql # 可选值为mysql、influxDB
+
+#请求处理的超时时间
+ribbon:
+  ReadTimeout: 6000
+  ConnectTimeout: 3000
+
+logging:
+  level: 
+    com.beidouiot.alllink.community.user.center.feign.OAuth2FeignClient: debug
