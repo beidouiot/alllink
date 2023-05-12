@@ -106,6 +106,5 @@ Alllink功能模块
 ---
 QQ群号：561606431  
 
-群二维码：  
-
+![群二维码](https://github.com/beidouiot/alllink/blob/master/script/pic/QQ.png)
 
