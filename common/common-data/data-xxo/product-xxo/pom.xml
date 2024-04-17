@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.beidouiot.alllink.community.common.data.xxo</groupId>
     <artifactId>data-xxo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.Release</version>
   </parent>
   <artifactId>product-xxo</artifactId>
   <name>product-xxo</name>

@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.beidouiot.alllink.community</groupId>
     <artifactId>alllink-community</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.Release</version>
   </parent>
   <groupId>com.beidouiot.alllink.community.cache</groupId>
   <artifactId>multistep-chache</artifactId>

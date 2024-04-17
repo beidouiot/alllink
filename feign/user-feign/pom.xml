@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.beidouiot.alllink.community.feign</groupId>
     <artifactId>feign</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.Release</version>
   </parent>
   <artifactId>user-feign</artifactId>
   <dependencies>

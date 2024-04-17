@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.beidouiot.alllink.community.device.center</groupId>
     <artifactId>device-center</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.Release</version>
   </parent>
   <artifactId>mqtt-server</artifactId>
   <name>device-mqtt-server</name>

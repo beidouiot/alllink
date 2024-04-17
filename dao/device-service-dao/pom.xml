@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.beidouiot.alllink.community</groupId>
     <artifactId>dao</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.Release</version>
   </parent>
   <groupId>com.beidouiot.alllink.community.dao</groupId>
   <artifactId>device-service-dao</artifactId>
